@@ -8,7 +8,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.NonNull
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 
 class LogInActivity : AppCompatActivity() {
 
@@ -23,6 +31,7 @@ class LogInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_log_in)
 
         auth = FirebaseAuth.getInstance()
+
         loginEmail = findViewById(R.id.login_email)
         loginPassword = findViewById(R.id.login_password)
         loginButton = findViewById(R.id.login_button)
@@ -38,7 +47,7 @@ class LogInActivity : AppCompatActivity() {
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                loginEmail.setError("Please enter valid email")
+                loginEmail.setError("Please enter a valid email")
                 return@setOnClickListener
             }
 
@@ -54,7 +63,7 @@ class LogInActivity : AppCompatActivity() {
                     finish()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Login Failed: " + e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Login Failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
 
