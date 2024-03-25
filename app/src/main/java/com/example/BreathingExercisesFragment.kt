@@ -8,33 +8,32 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
+
 import com.example.healthzensignuplogin.R
 
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [StressReliefFragment.newInstance] factory method to
+ * Use the [BreathingExercisesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StressReliefFragment : Fragment() {
+class BreathingExercisesFragment : Fragment() {
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_stress_relief, container, false)
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_breathing_exercises, container, false)
+        val button_arrow_back=view.findViewById<Button>(R.id.button_arrow_back)
 
-        val toBreathingExercisesButton=view.findViewById<Button>(R.id.button_BreathingExercises)
 
-
-
-        toBreathingExercisesButton.setOnClickListener {
-            // Navigate to the EducationFragment when the button is clicked
-            navigateToBreathingExercisesFragment()
+        button_arrow_back.setOnClickListener {
+            backToStressReliefFragment()
         }
-
 
 
 //        toEducationButton.setOnClickListener {
@@ -45,11 +44,9 @@ class StressReliefFragment : Fragment() {
 
 
         return view
-    }
-
-    private fun navigateToBreathingExercisesFragment() {
+    }   private fun backToStressReliefFragment() {
         // Create instance of EducationFragment
-        val breathingExercisesFragment = BreathingExercisesFragment()
+        val stressReliefFragment = StressReliefFragment()
 
         // Get FragmentManager
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
@@ -59,10 +56,9 @@ class StressReliefFragment : Fragment() {
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack
-        transaction.replace(R.id.frame_container, breathingExercisesFragment)
+        transaction.replace(R.id.frame_container, stressReliefFragment)
         transaction.addToBackStack(null)
 
         // Commit the transaction
         transaction.commit()
     }}
-
