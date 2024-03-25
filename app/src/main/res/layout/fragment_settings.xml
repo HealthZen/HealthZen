@@ -2,15 +2,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="setting Fragment"
-        android:textSize="36sp"
-        android:textColor="@color/brown"
-        android:gravity="top"/>
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="Setting page"
+            android:textColor="@color/lightgreen"
+            android:textSize="36sp"
+            android:textStyle="bold"/>
+
+
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:text="Change Username"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="30dp"
+            android:id="@+id/button_ChangeUsername"
+            android:backgroundTint="@color/white"
+
+            app:cornerRadius = "10dp"
+            />
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:text="Delete Account"
+            android:textSize="25sp"
+            android:textColor="@color/red"
+            android:layout_marginTop="30dp"
+            android:id="@+id/button_DeleteAccount"
+            android:backgroundTint="@color/white"
+            app:cornerRadius = "10dp"
+            />
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:text="Log Out"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="30dp"
+            android:id="@+id/button_LogOut"
+            android:backgroundTint="@color/white"
+            app:cornerRadius = "10dp"
+            />
+
+
+
+
+    </LinearLayout>
 
 </FrameLayout>

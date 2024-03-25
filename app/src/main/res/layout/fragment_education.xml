@@ -1,0 +1,93 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.EducationFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="this is educationpage"
+            android:textColor="@color/lightgreen"
+            android:textSize="36sp"
+            android:textStyle="bold"/>
+
+
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="Cardiovascular Health"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/button_CardiovascularHealth"
+            android:backgroundTint="@color/lightgreen"
+            />
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="Respiratory Health"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/button_RespiratoryHealth"
+            android:backgroundTint="@color/lightgreen"
+            />
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="Mental Health"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/button_MentalHealth"
+            android:backgroundTint="@color/lightgreen"
+            />
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="Infectious Health"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/button_InfectiousHealth"
+            android:backgroundTint="@color/lightgreen"
+            />
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="Women´s Health"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/button_WomensHealth"
+            android:backgroundTint="@color/lightgreen"
+            />
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="Men´s Health"
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/button_MensHealth"
+            android:backgroundTint="@color/lightgreen"
+            />
+<!--        <Button-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:text="Education"-->
+<!--            android:textSize="25sp"-->
+<!--            android:layout_marginTop="25dp"-->
+<!--            android:id="@+id/toEucation_button"-->
+<!--            android:backgroundTint="@color/lightgreen"-->
+<!--            />-->
+
+
+    </LinearLayout>
+
+</FrameLayout>
