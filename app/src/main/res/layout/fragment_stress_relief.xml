@@ -27,9 +27,11 @@
                     android:layout_height="70dp"
                     android:text="Breathing Exercises"
                     android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightergreen"
                     android:layout_marginTop="25dp"
                     android:id="@+id/button_BreathingExercises"
-                    android:backgroundTint="@color/lightgreen"
+                    android:backgroundTint="@color/white"
                     />
 
                 <Button
@@ -37,9 +39,11 @@
                     android:layout_height="70dp"
                     android:text="Stress Management Tips"
                     android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightergreen"
                     android:layout_marginTop="25dp"
                     android:id="@+id/button_RespiratoryHealth"
-                    android:backgroundTint="@color/lightgreen"
+                    android:backgroundTint="@color/white"
                     />
 
                 <Button
@@ -47,9 +51,11 @@
                     android:layout_height="70dp"
                     android:text="Community Support"
                     android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightergreen"
                     android:layout_marginTop="25dp"
                     android:id="@+id/button_MentalHealth"
-                    android:backgroundTint="@color/lightgreen"
+                    android:backgroundTint="@color/white"
                     />
 
 

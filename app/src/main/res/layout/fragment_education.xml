@@ -26,9 +26,11 @@
             android:layout_height="70dp"
             android:text="Cardiovascular Health"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="25dp"
             android:id="@+id/button_CardiovascularHealth"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
 
         <Button
@@ -36,9 +38,11 @@
             android:layout_height="70dp"
             android:text="Respiratory Health"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="25dp"
             android:id="@+id/button_RespiratoryHealth"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
 
         <Button
@@ -46,36 +50,44 @@
             android:layout_height="70dp"
             android:text="Mental Health"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="25dp"
             android:id="@+id/button_MentalHealth"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
         <Button
             android:layout_width="350dp"
             android:layout_height="70dp"
             android:text="Infectious Health"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="25dp"
             android:id="@+id/button_InfectiousHealth"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
         <Button
             android:layout_width="350dp"
             android:layout_height="70dp"
             android:text="Women´s Health"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="25dp"
             android:id="@+id/button_WomensHealth"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
         <Button
             android:layout_width="350dp"
             android:layout_height="70dp"
             android:text="Men´s Health"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="25dp"
             android:id="@+id/button_MensHealth"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
 <!--        <Button-->
 <!--            android:layout_width="350dp"-->

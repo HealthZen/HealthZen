@@ -19,7 +19,8 @@
             android:text="Home Page"
             android:textColor="@color/lightgreen"
             android:textSize="36sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            />
 
 
 
@@ -28,9 +29,11 @@
             android:layout_height="80dp"
             android:text="Education"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="30dp"
             android:id="@+id/toEucation_button"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
              />
 
         <Button
@@ -38,9 +41,11 @@
             android:layout_height="80dp"
             android:text="Videos"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="30dp"
             android:id="@+id/toVideos_button"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
              />
 
         <Button
@@ -48,9 +53,11 @@
             android:layout_height="80dp"
             android:text="Stress Relief"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="30dp"
             android:id="@+id/toStressRelief_button"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             />
 
         <Button
@@ -58,8 +65,10 @@
             android:layout_height="80dp"
             android:text="Chat with others"
             android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightergreen"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/lightgreen"
+            android:backgroundTint="@color/white"
             android:id="@+id/toChat_button"
             />
 
