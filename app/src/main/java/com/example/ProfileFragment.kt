@@ -1,13 +1,22 @@
 package com.example
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.healthzensignuplogin.LogInActivity
 import com.example.healthzensignuplogin.R
+import com.example.healthzensignuplogin.SignUpActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
 
@@ -17,6 +26,10 @@ class ProfileFragment : Fragment() {
     private lateinit var profilePassword: TextView
     private lateinit var titleName: TextView
     private lateinit var titleUsername: TextView
+    private lateinit var logoutButton: Button
+    private lateinit var deleteButton: Button
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     // Add variables to store user data
     private var nameUser: String? = null
@@ -29,7 +42,12 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        logoutButton = view.findViewById(R.id.logoutButton)
+        deleteButton = view.findViewById(R.id.deleteButton)
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,32 +67,112 @@ class ProfileFragment : Fragment() {
 
         // Set user data to TextViews
         setUserData(name, email, username, password)
-    }
 
-    // Function to set user data
-    fun setUserData(name: String?, email: String?, username: String?, password: String?) {
-        nameUser = name
-        emailUser = email
-        usernameUser = username
-        passwordUser = password
+        logoutButton.setOnClickListener {
+            // Build an AlertDialog to confirm logout
+            AlertDialog.Builder(requireContext())
+                .setTitle("Log Out")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Yes") { dialog, _ ->
+                    // If the user confirms logout, sign out
+                    auth.signOut()
+                    // Show a toast message indicating successful logout
+                    Toast.makeText(activity, "You have successfully logged out. See you again soon.", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(activity, LogInActivity::class.java))
+                    activity?.finish()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    // If the user cancels logout, dismiss the dialog
+                    dialog.dismiss()
+                }
+                .show()
+        }
 
-        // Update UI with user data
-        showUserData()
-    }
 
-    // Function to update UI with user data
-    private fun showUserData() {
-        // Check if TextViews are initialized
-        if (::titleName.isInitialized && ::titleUsername.isInitialized &&
-            ::profileName.isInitialized && ::profileEmail.isInitialized &&
-            ::profileUsername.isInitialized && ::profilePassword.isInitialized) {
-            // Set user data to TextViews
-            titleName.text = nameUser
-            titleUsername.text = usernameUser
-            profileName.text = nameUser
-            profileEmail.text = emailUser
-            profileUsername.text = usernameUser
-            profilePassword.text = passwordUser
+        deleteButton.setOnClickListener {
+            // Build an AlertDialog to confirm account deletion
+            AlertDialog.Builder(requireContext())
+                .setTitle("Delete Account")
+                .setMessage("All your data will not be recovered after account deletion. Are you sure you want to delete your account? ")
+                .setPositiveButton("Yes") { dialog, _ ->
+                    // If the user confirms deletion, delete the account
+                    deleteUserAccount()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    // If the user cancels deletion, dismiss the dialog
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
+        private fun deleteUserAccount() {
+            val user = auth.currentUser
+            user?.delete()
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // If the account is successfully deleted, delete user data from Firestore
+                        val userId = user.uid
+                        firestore.collection("users").document(userId)
+                            .delete()
+                            .addOnSuccessListener {
+                                // Account deletion and user data deletion successful
+                                Toast.makeText(
+                                    activity,
+                                    "Account deleted successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                // Redirect to the login screen
+                                startActivity(Intent(activity, SignUpActivity::class.java))
+                                activity?.finish()
+                            }
+                            .addOnFailureListener { e ->
+                                // Failed to delete user data from Firestore
+                                Toast.makeText(
+                                    activity,
+                                    "Failed to delete user data: ${e.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    } else {
+                        // Failed to delete account
+                        Toast.makeText(
+                            activity,
+                            "Failed to delete account: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+
+
+        // Function to set user data
+        fun setUserData(name: String?, email: String?, username: String?, password: String?) {
+            nameUser = name
+            emailUser = email
+            usernameUser = username
+            passwordUser = password
+
+            // Update UI with user data
+            showUserData()
+        }
+
+        // Function to update UI with user data
+        private fun showUserData() {
+            // Check if TextViews are initialized
+            if (::titleName.isInitialized && ::titleUsername.isInitialized &&
+                ::profileName.isInitialized && ::profileEmail.isInitialized &&
+                ::profileUsername.isInitialized && ::profilePassword.isInitialized
+            ) {
+                // Set user data to TextViews
+                titleName.text = nameUser
+                titleUsername.text = usernameUser
+                profileName.text = nameUser
+                profileEmail.text = emailUser
+                profileUsername.text = usernameUser
+                profilePassword.text = passwordUser
+            }
+        }
+
 }
