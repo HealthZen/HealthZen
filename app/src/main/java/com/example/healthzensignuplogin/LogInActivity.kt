@@ -71,34 +71,37 @@ class LogInActivity : AppCompatActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
-
     private fun fetchUserDataAndPassToProfile(userId: String) {
         firestore.collection("users").document(userId)
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val userData = document.data
-                    val name = userData?.get ("name").toString()
-                    val email = userData?.get ("email").toString()
-                    val username = userData?.get ("username").toString()
-                    val password = userData?.get ("password").toString()
+                    val name = userData?.get("name").toString()
+                    val email = userData?.get("email").toString()
+                    val username = userData?.get("username").toString()
+                    val password = userData?.get("password").toString()
 
-                    val sharedPref = getSharedPreferences("Userdata", Context.MODE_PRIVATE)
+                    // Store user data in SharedPreferences or ViewModel
+                    val sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
                     with(sharedPref.edit()) {
                         putString("name", name)
                         putString("email", email)
                         putString("username", username)
                         putString("password", password)
                         apply()
+                    }
+
+                    // Start MainActivity
+                    startActivity(Intent(this@LogInActivity, MainActivity::class.java))
+                    finish() // Finish the current activity to prevent going back to the login screen
+                } else {
+                    Toast.makeText(this@LogInActivity, "User data not found", Toast.LENGTH_SHORT).show()
                 }
-                startActivity(Intent(this@LogInActivity, MainActivity::class.java))
-                finish()
-            } else {
-                Toast.makeText(this@LogInActivity, "User data not found", Toast.LENGTH_SHORT).show()
             }
-        }
-            .addOnFailureListener{ e ->
+            .addOnFailureListener { e ->
                 Toast.makeText(this@LogInActivity, "Failed to fetch user data: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 }

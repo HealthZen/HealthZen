@@ -106,72 +106,70 @@ class ProfileFragment : Fragment() {
                 .show()
         }
     }
-        private fun deleteUserAccount() {
-            val user = auth.currentUser
-            user?.delete()
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // If the account is successfully deleted, delete user data from Firestore
-                        val userId = user.uid
-                        firestore.collection("users").document(userId)
-                            .delete()
-                            .addOnSuccessListener {
-                                // Account deletion and user data deletion successful
-                                Toast.makeText(
-                                    activity,
-                                    "Account deleted successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                // Redirect to the login screen
-                                startActivity(Intent(activity, SignUpActivity::class.java))
-                                activity?.finish()
-                            }
-                            .addOnFailureListener { e ->
-                                // Failed to delete user data from Firestore
-                                Toast.makeText(
-                                    activity,
-                                    "Failed to delete user data: ${e.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                    } else {
-                        // Failed to delete account
-                        Toast.makeText(
-                            activity,
-                            "Failed to delete account: ${task.exception?.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+    private fun deleteUserAccount() {
+        val user = auth.currentUser
+        user?.delete()
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // If the account is successfully deleted, delete user data from Firestore
+                    val userId = user.uid
+                    firestore.collection("users").document(userId)
+                        .delete()
+                        .addOnSuccessListener {
+                            // Account deletion and user data deletion successful
+                            Toast.makeText(
+                                activity,
+                                "Account deleted successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            // Redirect to the login screen
+                            startActivity(Intent(activity, SignUpActivity::class.java))
+                            activity?.finish()
+                        }
+                        .addOnFailureListener { e ->
+                            // Failed to delete user data from Firestore
+                            Toast.makeText(
+                                activity,
+                                "Failed to delete user data: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                } else {
+                    // Failed to delete account
+                    Toast.makeText(
+                        activity,
+                        "Failed to delete account: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-        }
-
-
-        // Function to set user data
-        fun setUserData(name: String?, email: String?, username: String?, password: String?) {
-            nameUser = name
-            emailUser = email
-            usernameUser = username
-            passwordUser = password
-
-            // Update UI with user data
-            showUserData()
-        }
-
-        // Function to update UI with user data
-        private fun showUserData() {
-            // Check if TextViews are initialized
-            if (::titleName.isInitialized && ::titleUsername.isInitialized &&
-                ::profileName.isInitialized && ::profileEmail.isInitialized &&
-                ::profileUsername.isInitialized && ::profilePassword.isInitialized
-            ) {
-                // Set user data to TextViews
-                titleName.text = nameUser
-                titleUsername.text = usernameUser
-                profileName.text = nameUser
-                profileEmail.text = emailUser
-                profileUsername.text = usernameUser
-                profilePassword.text = passwordUser
             }
-        }
+    }
 
+
+    // Function to set user data
+    fun setUserData(name: String?, email: String?, username: String?, password: String?) {
+        nameUser = name
+        emailUser = email
+        usernameUser = username
+        passwordUser = password
+
+        // Update UI with user data
+        showUserData()
+    }
+
+    // Function to update UI with user data
+    private fun showUserData() {
+        // Check if TextViews are initialized
+        if (::titleName.isInitialized && ::titleUsername.isInitialized &&
+            ::profileName.isInitialized && ::profileEmail.isInitialized &&
+            ::profileUsername.isInitialized && ::profilePassword.isInitialized) {
+            // Set user data to TextViews
+            titleName.text = nameUser
+            titleUsername.text = usernameUser
+            profileName.text = nameUser
+            profileEmail.text = emailUser
+            profileUsername.text = usernameUser
+            profilePassword.text = passwordUser
+        }
+    }
 }
