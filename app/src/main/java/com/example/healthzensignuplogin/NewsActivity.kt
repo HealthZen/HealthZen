@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dfl.newsapi.NewsApiRepository
 import com.dfl.newsapi.enums.Category
 import com.dfl.newsapi.enums.Country
-import com.dfl.newsapi.enums.Language
 import com.dfl.newsapi.model.ArticleDto
-import com.dfl.newsapi.model.ArticlesDto
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import io.reactivex.schedulers.Schedulers
 
@@ -22,6 +20,7 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var adapter: NewsRecyclerAdapter
     private lateinit var progressIndicator: LinearProgressIndicator
     private val articleList = mutableListOf<ArticleDto>()
+    private val removedArticleUrls = HashSet<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +62,9 @@ class NewsActivity : AppCompatActivity() {
             .subscribe({ articles ->
                 runOnUiThread {
                     changeInProgress(false)
+                    val filteredArticles = articles.filterNot {removedArticleUrls.contains(it.url)}
                     articleList.clear()
-                    articleList.addAll(articles)
+                    articleList.addAll(filteredArticles)
                     adapter.notifyDataSetChanged()
                 }
             },
