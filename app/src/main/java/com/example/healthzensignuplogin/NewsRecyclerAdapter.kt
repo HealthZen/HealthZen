@@ -1,5 +1,6 @@
 package com.example.healthzensignuplogin
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,11 @@ class NewsRecyclerAdapter(private val articleList: MutableList<ArticleDto>) : Re
             .error(R.drawable.no_image_icon)
             .placeholder(R.drawable.no_image_icon)
             .into(holder.imageView)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(it.context, NewsFullActivity::class.java)
+            intent.putExtra("url", article.url)
+            it.context.startActivity(intent)
+        }
     }
 
     fun updateData(data: List<ArticleDto>) {
