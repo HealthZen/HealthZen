@@ -20,7 +20,7 @@ class EducationActivity : AppCompatActivity() {
 
         // Set up the Retrofit service
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://clinicaltables.nlm.nih.gov/api/conditions/")
+            .baseUrl("https://clinicaltables.nlm.nih.gov/api/conditions/v3/search")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

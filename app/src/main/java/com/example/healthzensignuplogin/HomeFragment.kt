@@ -19,6 +19,12 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val newsButton: Button = view.findViewById(R.id.newsButton)
         val educationButton: Button = view.findViewById(R.id.educationButton)
+        val calendarButton: Button = view.findViewById(R.id.calendarButton)
+
+        calendarButton.setOnClickListener {
+            // Launch NewsActivity when newsButton is clicked
+            startActivity(Intent(activity, CalendarActivity::class.java))
+        }
 
         educationButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
