@@ -55,6 +55,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/login_password"
                 android:background="@drawable/custom_edittext"
+                android:inputType="textPassword"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
                 android:hint="Password"
@@ -71,6 +72,17 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/lightgreen"
                 app:cornerRadius = "20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/forgot_password"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/lightgreen"
+                android:textSize="16sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
