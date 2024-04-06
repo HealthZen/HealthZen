@@ -93,6 +93,17 @@
                 android:backgroundTint="@color/lightgreen"
                 app:cornerRadius = "20dp" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:text="sign in with google"
+                android:id="@+id/btnGoogleSignIn"
+                android:backgroundTint="@color/lightgreen"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"
+               />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "868781006084",
+    "firebase_url": "https://healthzensignuplogin-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "healthzensignuplogin",
     "storage_bucket": "healthzensignuplogin.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.healthzensignuplogin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "868781006084-7c04bs4kierd2pbebbn955c2igd6130g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healthzensignuplogin",
+            "certificate_hash": "9844f42fcef355974a185354c9a73d23b2402b55"
+          }
+        },
+        {
+          "client_id": "868781006084-lp03pgcnundg2el1p7g3grh7akocjtnt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAo-s_s8CY58OWGY6v0wtLM6Vqnb3fr2bQ"
@@ -20,7 +34,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868781006084-lp03pgcnundg2el1p7g3grh7akocjtnt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868781006084:android:263b9c5d2627a2eb5a0451",
+        "android_client_info": {
+          "package_name": "com.example.signuploginfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868781006084-lp03pgcnundg2el1p7g3grh7akocjtnt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo-s_s8CY58OWGY6v0wtLM6Vqnb3fr2bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868781006084-lp03pgcnundg2el1p7g3grh7akocjtnt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
