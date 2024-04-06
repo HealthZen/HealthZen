@@ -23,7 +23,7 @@ class LogInActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var signupRedirectText: TextView
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var forgetpasswordbtn:Button
+    private lateinit var forgetpassword:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class LogInActivity : AppCompatActivity() {
         loginPassword = findViewById(R.id.login_password)
         loginButton = findViewById(R.id.login_button)
         signupRedirectText = findViewById(R.id.signupRedirectText)
-        forgetpasswordbtn=findViewById(R.id.forgot_password)
+        forgetpassword=findViewById(R.id.forgot_password)
 
         loginButton.setOnClickListener {
             val email = loginEmail.text.toString().trim()
@@ -72,7 +72,7 @@ class LogInActivity : AppCompatActivity() {
                 }
         }
 
-        forgetpasswordbtn.setOnClickListener {
+        forgetpassword.setOnClickListener {
             val builder= AlertDialog.Builder(this)
             val view=layoutInflater.inflate(R.layout.dialog_forgot,null)
             val userEmail=view.findViewById<EditText>(R.id.editBox)
