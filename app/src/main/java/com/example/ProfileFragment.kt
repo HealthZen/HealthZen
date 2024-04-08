@@ -3,11 +3,13 @@ package com.example
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -29,6 +31,7 @@ class ProfileFragment : Fragment() {
     private lateinit var deleteButton: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var editButton: Button
 
     // Add variables to store user data
     private var nameUser: String? = null
@@ -44,8 +47,15 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         logoutButton = view.findViewById(R.id.logoutButton)
         deleteButton = view.findViewById(R.id.deleteButton)
+        editButton=view.findViewById(R.id.editButton)
+
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+
+
+
+
+
         return view
     }
 
@@ -105,7 +115,84 @@ class ProfileFragment : Fragment() {
                 }
                 .show()
         }
+
+        editButton.setOnClickListener {
+            val builder= androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            val view=layoutInflater.inflate(R.layout.dialog_changeusername,null)
+            val newUserName=view.findViewById<EditText>(R.id.editBox)
+
+            builder.setView(view)
+            val dialog=builder.create()
+
+
+            view.findViewById<Button>(R.id.btnDone).setOnClickListener {
+               changeUserName(newUserName)
+
+                dialog.dismiss()
+            }
+            view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+                dialog.dismiss()
+            }
+            if (dialog.window!=null){
+                dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+            }
+            dialog.show()
+
+        }
+
+
+
     }
+    private fun changeUserName(newName:EditText) {
+        if (newName.text.toString().isNotEmpty()) {
+            auth= FirebaseAuth.getInstance()
+
+            val currentUser=auth.currentUser
+            if (currentUser!=null){
+                val userId=auth.currentUser!!.uid
+
+
+                val newusername=newName.text.toString()
+                val updateMap= mapOf(
+                    "username" to newusername
+                )
+                firestore.collection("users").document(userId)
+                    .update(updateMap)
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            activity,
+                            "Changed username successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        setUserData(nameUser, emailUser, newusername, passwordUser)
+
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(
+                            activity,
+                            "Failed to change username:${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }else{
+                Toast.makeText(
+                    activity,
+                    "User not logged in"
+                    ,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }}
+        else {
+            Toast.makeText(
+                activity,
+                "field cannot be empty",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
+
     private fun deleteUserAccount() {
         val user = auth.currentUser
         user?.delete()
