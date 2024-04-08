@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.healthzensignuplogin.LogInActivity
+import com.example.healthzensignuplogin.MyPostsActivity
 import com.example.healthzensignuplogin.R
 import com.example.healthzensignuplogin.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var editButton: Button
+    private lateinit var postsNumber:TextView
 
     // Add variables to store user data
     private var nameUser: String? = null
@@ -48,6 +50,7 @@ class ProfileFragment : Fragment() {
         logoutButton = view.findViewById(R.id.logoutButton)
         deleteButton = view.findViewById(R.id.deleteButton)
         editButton=view.findViewById(R.id.editButton)
+        postsNumber=view.findViewById(R.id.postsNumber)
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -98,6 +101,9 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
+        postsNumber.setOnClickListener {
+            startActivity(Intent(activity,MyPostsActivity::class.java))
+        }
 
         deleteButton.setOnClickListener {
             // Build an AlertDialog to confirm account deletion
