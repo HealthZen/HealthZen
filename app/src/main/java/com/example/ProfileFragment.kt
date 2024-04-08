@@ -143,6 +143,8 @@ class ProfileFragment : Fragment() {
 
 
     }
+
+    //change username
     private fun changeUserName(newName:EditText) {
         if (newName.text.toString().isNotEmpty()) {
             auth= FirebaseAuth.getInstance()
