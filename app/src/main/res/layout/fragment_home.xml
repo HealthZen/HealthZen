@@ -162,7 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/lightgreen"
-                    android:text="Chat"
+                    android:text="Community"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:cornerRadius="20dp" />

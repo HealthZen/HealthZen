@@ -16,6 +16,15 @@
         android:theme="@style/Theme.HealthZenSignUpLogIn"
         tools:targetApi="31">
         <activity
+            android:name=".MyPostsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityActivity"
+            android:exported="false" />
+        <activity
             android:name=".WeekViewActivity"
             android:exported="false" />
         <activity
