@@ -17,6 +17,7 @@ class PostActivity : AppCompatActivity() {
     private lateinit var postTitle:EditText
     private lateinit var postContent:EditText
     private lateinit var submitPostButton:Button
+    private lateinit var cancelButton:Button
     private lateinit var firestore:FirebaseFirestore
     private lateinit var firebaseAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,7 @@ class PostActivity : AppCompatActivity() {
         postTitle = findViewById(R.id.postTitle)
         postContent = findViewById(R.id.postContent)
         submitPostButton = findViewById(R.id.submitPostButton)
+        cancelButton=findViewById(R.id.cancelButton)
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -74,6 +76,10 @@ class PostActivity : AppCompatActivity() {
 
                 }
             }
+        }
+
+        cancelButton.setOnClickListener {
+            startActivity(Intent(this,CommunityActivity::class.java))
         }
 
 

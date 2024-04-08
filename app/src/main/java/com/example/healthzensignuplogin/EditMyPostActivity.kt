@@ -17,6 +17,7 @@ class EditMyPostActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var submitButton:Button
+    private lateinit var cancelButton:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,7 @@ class EditMyPostActivity : AppCompatActivity() {
         auth= FirebaseAuth.getInstance()
         firestore=FirebaseFirestore.getInstance()
         submitButton=findViewById(R.id.submitButton)
+        cancelButton=findViewById(R.id.cancelButton)
 
 
         val userId=FirebaseAuth.getInstance().currentUser!!.uid
@@ -98,6 +100,13 @@ class EditMyPostActivity : AppCompatActivity() {
 
 
                 }
+
+                cancelButton.setOnClickListener {
+                    startActivity(Intent(this,MyPostsActivity::class.java))
+                }
+
+
+
 
             }
 
