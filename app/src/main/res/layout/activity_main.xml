@@ -7,6 +7,8 @@
     android:background="@drawable/bkggreen"
     tools:context=".MainActivity">
 
+
+
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"

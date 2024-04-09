@@ -15,28 +15,28 @@ class CommunityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community)
+
         bottomNavigationView=findViewById(R.id.bottom_navigation)
 
 
 
 
-        bottomNavigationView.setOnItemSelectedListener { menuItem->
-            when (menuItem.itemId){
-                R.id.bottom_home->{
-                    replaceFragment(HomeFragment())
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.bottom_home -> {
+                    startFragment(HomeFragment())
                     true
                 }
-                R.id.bottom_profile->{
-                    replaceFragment(ProfileFragment())
+                R.id.bottom_profile -> {
+                    startFragment(ProfileFragment())
                     true
                 }
-                R.id.bottom_settings->{
-                    replaceFragment(SettingsFragment())
+                R.id.bottom_settings -> {
+                    startFragment(SettingsFragment())
                     true
                 }
-                else ->false
+                else -> false
             }
-
         }
 
 
@@ -50,8 +50,12 @@ class CommunityActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.frame_container,fragment).commit()
+
+
+    private fun startFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frame_container, fragment)
+            .commit()
     }
 
 }

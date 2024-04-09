@@ -46,15 +46,17 @@ class PostActivity : AppCompatActivity() {
                     ref.get().addOnSuccessListener {
                         if (it != null) {
                             val username = it.data?.get("username")?.toString()
+                            val email = it.data?.get("email")?.toString()
 
 
                             val post = hashMapOf(
                                 "postTitle" to posttitle,
                                 "postContent" to postcontent,
                                 "poster" to username,
+                                "userId" to userId
                             )
-                            firestore.collection("post").document(userId)
-                                .set(post)
+                            firestore.collection("post")
+                                .add(post)
                                 .addOnSuccessListener {
                                     Toast.makeText(
                                         this@PostActivity,
