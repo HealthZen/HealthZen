@@ -28,18 +28,22 @@ class MyPostsActivity : AppCompatActivity() {
 
 
         val userId=FirebaseAuth.getInstance().currentUser!!.uid
-        val ref=firestore.collection("post").document(userId)
-        ref.get().addOnSuccessListener {
-            if (it!=null){
-                val posttitle=it.data?.get("postTitle")?.toString()
-                val postcontent=it.data?.get("postContent")?.toString()
+        if (userId!=null){
+       firestore.collection("post")
+           .whereEqualTo("userId",userId)
+           .get()
+        .addOnSuccessListener {
+            querySnapshot->
+            for (document in querySnapshot.documents){
+                val posttitle=document.getString("postTitle")
+                val postcontent=document.getString("postContent")
 
                 myPostTitle.text=posttitle
                 myPostContent.text=postcontent
 
+            }}
 
-            }
-        }
+    }
 
 
         editPostButton.setOnClickListener {
