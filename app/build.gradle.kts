@@ -15,7 +15,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "YOUTUBE_API_KEY", "AIzaSyA6pMQthbKdx5br3FwTm8hImsPlUVpMziM")
+        buildConfigField("String", "YOUTUBE_API_KEY", "\"AIzaSyA6pMQthbKdx5br3FwTm8hImsPlUVpMziM\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -72,3 +72,5 @@ android {
         androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     }
 }
+
+

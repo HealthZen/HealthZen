@@ -11,13 +11,14 @@ class ApiConfig {
         fun getService(): ApiServices {
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(
-                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                    if (com.example.healthzensignuplogin.BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                     else HttpLoggingInterceptor.Level.NONE
                 )
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor { chain ->
+                    val apiKey = "AIzaSyA6pMQthbKdx5br3FwTm8hImsPlUVpMziM"
                     val url = chain
                         .request()
                         .url
