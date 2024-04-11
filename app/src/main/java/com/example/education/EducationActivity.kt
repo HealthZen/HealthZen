@@ -36,9 +36,9 @@ class EducationActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_search) {
             // Handle search menu item click
-            return true
+            return false
         }
-        return super.onOptionsItemSelected(item)
+        return false
     }
 }
 

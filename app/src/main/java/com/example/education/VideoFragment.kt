@@ -99,7 +99,7 @@ class VideoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         videoViewModel =
-            ViewModelProvider(this).get(VideoViewModel::class.java)
+            ViewModelProvider(this)[VideoViewModel::class.java]
         _binding = FragmentVideoBinding.inflate(inflater, container, false)
         return binding.root
     }

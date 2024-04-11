@@ -32,7 +32,7 @@ class VideoViewModel : ViewModel() {
             .getService()
             .getVideo(
                 "snippet",
-                "UCaAfGX-JgRZ0QUKR1RRw28w",
+                "UC284Za0seKV8WGZJO4gltFg",
                 "date",
                 nextPageToken,
                 querySearch
