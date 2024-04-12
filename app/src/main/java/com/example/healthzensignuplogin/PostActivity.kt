@@ -68,7 +68,7 @@ class PostActivity : AppCompatActivity() {
                                         "post successfuuly",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    startActivity(Intent(this,CommunityActivity::class.java))
+                                    startActivity(Intent(this,AllPostsActivity::class.java))
 
                                 }
                                 .addOnFailureListener { e ->
@@ -86,7 +86,7 @@ class PostActivity : AppCompatActivity() {
         }
 
         cancelButton.setOnClickListener {
-            startActivity(Intent(this,CommunityActivity::class.java))
+            startActivity(Intent(this,AllPostsActivity::class.java))
         }
 
 

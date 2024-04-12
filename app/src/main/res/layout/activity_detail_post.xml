@@ -2,49 +2,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/profilebkg3">
 
-    <TextView
-        android:id="@+id/textViewPostTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:padding="24dp"
+        android:background="@color/white">
 
-    <TextView
-        android:id="@+id/textViewPostContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPostTitle"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textViewPostTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewPoster"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPostContent"
-        android:layout_marginTop="8dp"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/textViewPostContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewPostTitle"
+            android:layout_marginTop="8dp"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/deletePostButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPoster"
-        android:layout_marginTop="16dp"
-        android:text="Delete"
-        android:layout_alignParentStart="true"
-        android:onClick="onDeleteButtonClicked" />
+        <TextView
+            android:id="@+id/textViewPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewPostContent"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/editPostButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPoster"
-        android:layout_marginTop="16dp"
-        android:text="Edit"
-        android:layout_alignParentEnd="true"
-        android:onClick="onEditButtonClicked" />
+        <Button
+            android:id="@+id/deletePostButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Delete"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:onClick="onDeleteButtonClicked"
+            android:textSize="18sp"
+            android:backgroundTint="@color/lightgreen" />
+
+        <Button
+            android:id="@+id/editPostButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Edit"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="onEditButtonClicked"
+            android:backgroundTint="@color/lightgreen" />
+
+    </LinearLayout>
 
 </RelativeLayout>

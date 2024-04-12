@@ -4,7 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AllPostsActivity">
+    tools:context=".AllPostsActivity"
+    android:background="@drawable/profilebkg">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/goPostButton"
+        android:layout_marginTop="10dp"
+        android:text="post"
+        android:backgroundTint="@color/lightgreen"
+        />
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_posts_recycler_view"

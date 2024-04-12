@@ -27,14 +27,14 @@
             android:orientation="vertical"
             android:layout_gravity="center_horizontal"
             android:padding="24dp"
-            android:background="@drawable/custom_edittext">
+            >
 
 
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/custom_edittext"
+
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
                 android:id="@+id/postTitle"
@@ -51,7 +51,7 @@
                 android:id="@+id/postContent"
                 android:hint="write your content here"
                 android:textSize="30sp"
-                android:background="@drawable/custom_edittext"
+
 
                 android:layout_marginTop="20dp"
                 android:padding="8dp"

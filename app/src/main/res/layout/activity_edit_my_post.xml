@@ -10,7 +10,7 @@ android:layout_height="match_parent"
 android:id="@+id/fragment_container"
 android:orientation="vertical"
 android:gravity="center"
-android:background="@drawable/profilebkg2"
+android:background="@drawable/profilebkg3"
 tools:context=".EditMyPostActivity">
 
 
@@ -27,14 +27,14 @@ tools:context=".EditMyPostActivity">
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:padding="24dp"
-        android:background="@drawable/custom_edittext">
+        >
 
 
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/custom_edittext"
+
             android:layout_marginTop="20dp"
             android:padding="8dp"
             android:id="@+id/editPostTitle"
@@ -51,7 +51,7 @@ tools:context=".EditMyPostActivity">
             android:id="@+id/editPostContent"
             android:hint="write your content here"
             android:textSize="30sp"
-            android:background="@drawable/custom_edittext"
+
             android:layout_marginTop="20dp"
             android:padding="8dp"
             android:drawablePadding="8dp"
