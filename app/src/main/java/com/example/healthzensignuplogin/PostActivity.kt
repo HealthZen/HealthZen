@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.UUID
 
 class PostActivity : AppCompatActivity() {
 
@@ -42,6 +43,8 @@ class PostActivity : AppCompatActivity() {
                 val currentUser = firebaseAuth.currentUser
                 if (currentUser != null) {
                     val userId = currentUser!!.uid
+                    val postId = UUID.randomUUID().toString()
+
                     val ref = firestore.collection("users").document(userId)
                     ref.get().addOnSuccessListener {
                         if (it != null) {
@@ -49,14 +52,16 @@ class PostActivity : AppCompatActivity() {
                             val email = it.data?.get("email")?.toString()
 
 
+
                             val post = hashMapOf(
                                 "postTitle" to posttitle,
                                 "postContent" to postcontent,
                                 "poster" to username,
-                                "userId" to userId
+                                "userId" to userId,
+                                "postId" to postId
                             )
-                            firestore.collection("post")
-                                .add(post)
+                            firestore.collection("posts").document(postId)
+                                .set(post)
                                 .addOnSuccessListener {
                                     Toast.makeText(
                                         this@PostActivity,

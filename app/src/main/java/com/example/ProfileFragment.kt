@@ -13,8 +13,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.healthzensignuplogin.CalendarActivity
 import com.example.healthzensignuplogin.LogInActivity
 import com.example.healthzensignuplogin.MyPostsActivity
+
+import com.example.healthzensignuplogin.NewsActivity
 import com.example.healthzensignuplogin.R
 import com.example.healthzensignuplogin.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth

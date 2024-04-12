@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
         chatButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
-            startActivity(Intent(activity, CommunityActivity::class.java))
+            startActivity(Intent(activity,AllPostsActivity::class.java))
         }
 
         return view
