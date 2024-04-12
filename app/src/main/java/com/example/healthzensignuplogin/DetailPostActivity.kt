@@ -28,11 +28,11 @@ class DetailPostActivity : AppCompatActivity() {
         val postId = intent.getStringExtra("postId")
 
         // Retrieve post details based on postId (from database or elsewhere)
-        getPostDetails(postId) { post ->
+        getPostDetails(postId) { posts ->
             // Display post details in TextViews
-            findViewById<TextView>(R.id.textViewPostTitle).text = post?.posttitle
-            findViewById<TextView>(R.id.textViewPostContent).text = post?.postcontent
-            findViewById<TextView>(R.id.textViewPoster).text = post?.poster
+//            findViewById<TextView>(R.id.textViewPoster).text = post?.poster  // Set poster first
+            findViewById<TextView>(R.id.textViewPostTitle).text = posts?.posttitle
+            findViewById<TextView>(R.id.textViewPostContent).text = posts?.postcontent
         }
 
 
@@ -91,7 +91,7 @@ class DetailPostActivity : AppCompatActivity() {
                     val postTitle = document.getString("postTitle") ?: ""
                     val postContent = document.getString("postContent") ?: ""
                     val poster = document.getString("poster") ?: ""
-                    val post = MyPostDataClass(postId, postTitle, postContent, poster)
+                    val post = MyPostDataClass( postTitle, postContent, poster,postId)
                     callback(post)
                 } else {
                     // Post not found or document doesn't exist
