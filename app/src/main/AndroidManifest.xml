@@ -67,7 +67,7 @@
             android:name=".CalendarViewHolder"
             android:exported="false" />
         <activity
-            android:name=".EducationActivity"
+            android:name="com.example.education.EducationActivity"
             android:exported="false" />
         <activity
             android:name=".NewsFullActivity"
