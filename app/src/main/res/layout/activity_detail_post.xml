@@ -27,4 +27,24 @@
         android:layout_marginTop="8dp"
         android:textSize="14sp" />
 
+    <Button
+        android:id="@+id/deletePostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewPoster"
+        android:layout_marginTop="16dp"
+        android:text="Delete"
+        android:layout_alignParentStart="true"
+        android:onClick="onDeleteButtonClicked" />
+
+    <Button
+        android:id="@+id/editPostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewPoster"
+        android:layout_marginTop="16dp"
+        android:text="Edit"
+        android:layout_alignParentEnd="true"
+        android:onClick="onEditButtonClicked" />
+
 </RelativeLayout>

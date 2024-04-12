@@ -1,17 +1,28 @@
 package com.example.healthzensignuplogin
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.healthzensignuplogin.MyPostDataClass
 import com.example.healthzensignuplogin.R
+import com.google.firebase.auth.FirebaseAuth
 
 class DetailPostActivity : AppCompatActivity() {
+    private lateinit var editPostButton:Button
+    private lateinit var deletePostButton:Button
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
+        editPostButton=findViewById(R.id.editPostButton)
+        deletePostButton=findViewById(R.id.deletePostButton)
+        firebaseAuth=FirebaseAuth.getInstance()
 
         // Retrieve postId from intent extra
         val postId = intent.getStringExtra("postId")
@@ -23,6 +34,44 @@ class DetailPostActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewPostContent).text = post?.postcontent
             findViewById<TextView>(R.id.textViewPoster).text = post?.poster
         }
+
+
+        editPostButton.setOnClickListener {
+            val intent = Intent(this, EditMyPostActivity::class.java)
+            intent.putExtra("postId", postId)
+            startActivity(intent)
+        }
+
+        deletePostButton.setOnClickListener {
+            val postId = postId ?: return@setOnClickListener
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Confirm Delete")
+            builder.setMessage("Are you sure you want to delete this post?")
+            builder.setPositiveButton("Yes") { dialog, which ->
+                val userId = FirebaseAuth.getInstance().currentUser?.uid
+                if (userId != null) {
+                    val db = FirebaseFirestore.getInstance()
+                    db.collection("posts").document(postId)
+                        .delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(this@DetailPostActivity, "Post deleted successfully", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@DetailPostActivity, MyPostsActivity::class.java))
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this@DetailPostActivity, "Failed to delete post: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    Toast.makeText(this@DetailPostActivity, "User not logged in", Toast.LENGTH_SHORT).show()
+                }
+            }
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+
     }
 
     // Function to retrieve post details from database or elsewhere
