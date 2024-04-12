@@ -1,12 +1,14 @@
 package com.example.healthzensignuplogin
+
+
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 
-class MyPostsActivity : AppCompatActivity() {
+class MyPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyPostsAdapter
@@ -27,18 +29,26 @@ class MyPostsActivity : AppCompatActivity() {
             .addOnSuccessListener { documents ->
                 val posts = mutableListOf<MyPostDataClass>()
                 for (document in documents) {
-                    val posttitle= document.getString("postTitle") ?: ""
-                    val postcontent = document.getString("postContent") ?: ""
+                    val postTitle = document.getString("postTitle") ?: ""
+                    val postContent = document.getString("postContent") ?: ""
                     val poster = document.getString("poster") ?: ""
-                   posts.add(MyPostDataClass(posttitle, postcontent, poster))
+                    val postId = document.id // Use Firestore document id as postId
+                    posts.add(MyPostDataClass(postTitle, postContent, poster,postId))
                 }
-                adapter = MyPostsAdapter(posts)
+                adapter = MyPostsAdapter(posts, this)
                 recyclerView.adapter = adapter
             }
             .addOnFailureListener { exception ->
                 // Handle errors
                 exception.printStackTrace()
             }
+    }
+
+    override fun onItemClick(post: MyPostDataClass) {
+        // Handle click event, navigate to detail post page
+        val intent = Intent(this, DetailPostActivity::class.java)
+        intent.putExtra("postId", post.postId) // Pass postId to detail post activity
+        startActivity(intent)
     }
 }
 
