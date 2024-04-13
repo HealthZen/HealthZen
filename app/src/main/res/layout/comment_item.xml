@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -10,13 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:padding="24dp"
+        android:padding="14dp"
         android:background="@color/white"
         tools:ignore="MissingConstraints"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="5dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/commentAuthor"
@@ -24,28 +25,28 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewPostContent"
                 android:layout_marginTop="8dp"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:text="commentauthor"/>
 
             <TextView
                 android:id="@+id/commentDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="10sp"
                 android:text="commentdate"/>
-        </LinearLayout>
 
 
         <TextView
             android:id="@+id/commentContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
+
             android:text="commentcontent"/>
 
 
 
+        </LinearLayout>
 
     </LinearLayout>
 
