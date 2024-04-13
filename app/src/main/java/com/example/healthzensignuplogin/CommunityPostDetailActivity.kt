@@ -110,7 +110,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                                         "Comment posted successfuuly",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    startActivity(Intent(this,AllPostsActivity::class.java))
+                                    startActivity(Intent(this,CommunityPostDetailActivity::class.java))
 
                                 }
                                 .addOnFailureListener { e ->
