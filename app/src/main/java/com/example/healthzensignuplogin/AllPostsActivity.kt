@@ -61,7 +61,7 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
     }
     override fun onItemClick(post: MyPostDataClass) {
         // Handle click event, navigate to detail post page
-        val intent = Intent(this, DetailPostActivity::class.java)
+        val intent = Intent(this, CommunityPostDetailActivity::class.java)
         intent.putExtra("postId", post.postId) // Pass postId to detail post activity
         startActivity(intent)
     }

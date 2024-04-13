@@ -13,7 +13,7 @@ class MyPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener 
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyPostsAdapter
-    private lateinit var firestore: FirebaseFirestore
+    private lateinit var db: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
