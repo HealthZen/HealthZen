@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
 
@@ -52,13 +53,15 @@ class PostActivity : AppCompatActivity() {
                             val email = it.data?.get("email")?.toString()
 
 
+                            val timestamp = FieldValue.serverTimestamp()
 
                             val post = hashMapOf(
                                 "postTitle" to posttitle,
                                 "postContent" to postcontent,
                                 "poster" to username,
                                 "userId" to userId,
-                                "postId" to postId
+                                "postId" to postId,
+                                "timestamp" to timestamp
                             )
                             firestore.collection("posts").document(postId)
                                 .set(post)
