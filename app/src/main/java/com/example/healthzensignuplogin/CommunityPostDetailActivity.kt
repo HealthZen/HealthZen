@@ -4,23 +4,32 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.UUID
 
 class CommunityPostDetailActivity : AppCompatActivity() {
     private lateinit var buttonPostComment: Button
-    private lateinit var deletePostButton: Button
+  private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var commentEditText: EditText
+    private lateinit var commentRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_post_detail)
         buttonPostComment=findViewById(R.id.buttonPostComment)
+        commentEditText = findViewById(R.id.commentEditText)
+        commentRecyclerView = findViewById(R.id.commentRecyclerView)
 
         firebaseAuth= FirebaseAuth.getInstance()
+firestore=FirebaseFirestore.getInstance()
 
         // Retrieve postId from intent extra
         val postId = intent.getStringExtra("postId")
@@ -35,41 +44,57 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         }
 
 
-//        editPostButton.setOnClickListener {
-//            val intent = Intent(this, EditMyPostActivity::class.java)
-//            intent.putExtra("postId", postId)
-//            startActivity(intent)
-//        }
+        buttonPostComment.setOnClickListener {
 
-//        deletePostButton.setOnClickListener {
-//            val postId = postId ?: return@setOnClickListener
-//            val builder = AlertDialog.Builder(this)
-//            builder.setTitle("Confirm Delete")
-//            builder.setMessage("Are you sure you want to delete this post?")
-//            builder.setPositiveButton("Yes") { dialog, which ->
-//                val userId = FirebaseAuth.getInstance().currentUser?.uid
-//                if (userId != null) {
-//                    val db = FirebaseFirestore.getInstance()
-//                    db.collection("posts").document(postId)
-//                        .delete()
-//                        .addOnSuccessListener {
-//                            Toast.makeText(this@CommunityPostDetailActivity, "Post deleted successfully", Toast.LENGTH_SHORT).show()
-//                            startActivity(Intent(this@CommunityPostDetailActivity, MyPostsActivity::class.java))
-//                            finish()
-//                        }
-//                        .addOnFailureListener { e ->
-//                            Toast.makeText(this@CommunityPostDetailActivity, "Failed to delete post: ${e.message}", Toast.LENGTH_SHORT).show()
-//                        }
-//                } else {
-//                    Toast.makeText(this@CommunityPostDetailActivity, "User not logged in", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            builder.setNegativeButton("No") { dialog, which ->
-//                dialog.dismiss()
-//            }
-//            val dialog = builder.create()
-//            dialog.show()
-//        }
+            var commentContent = commentEditText.text.toString()
+
+                if (commentContent.isNotEmpty() ) {
+                    val currentUser = firebaseAuth.currentUser
+                    if (currentUser != null) {
+                        val userId = currentUser!!.uid
+
+                        val ref = firestore.collection("users").document(userId)
+                        ref.get().addOnSuccessListener {
+                            if (it != null) {
+                                val commentAuthor = it.data?.get("username")?.toString()
+                                val timestamp = FieldValue.serverTimestamp()
+
+                                val commentData = hashMapOf(
+                                    "commentContent" to commentContent,
+                                    "commentAuthor" to commentAuthor,
+                                    "commentAuthorId" to userId,
+                                    "postId" to postId,
+                                    "timestamp" to timestamp
+
+                                )
+                                firestore.collection("comments")
+                                    .add(commentData)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            this@CommunityPostDetailActivity,
+                                            "Comment posted successfuuly",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        finish()
+                                        startActivity(intent)
+
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(
+                                            this@CommunityPostDetailActivity,
+                                            "Failed to post comment:${e.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
+                        }
+
+                    }
+                }
+
+        }
+
+
 
     }
 
