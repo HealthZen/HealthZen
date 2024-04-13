@@ -64,6 +64,7 @@ class ProfileFragment : Fragment() {
         profileName = view.findViewById(R.id.profileName)
         profileEmail = view.findViewById(R.id.profileEmail)
         profileUsername = view.findViewById(R.id.profileUsername)
+        profilePassword = view.findViewById(R.id.profilePassword)
         titleName = view.findViewById(R.id.titleName)
         titleUsername = view.findViewById(R.id.titleUsername)
 
@@ -125,7 +126,7 @@ class ProfileFragment : Fragment() {
 
 
             view.findViewById<Button>(R.id.btnDone).setOnClickListener {
-               changeUserName(newUserName)
+                changeUserName(newUserName)
 
                 dialog.dismiss()
             }
@@ -257,7 +258,7 @@ class ProfileFragment : Fragment() {
             profileName.text = nameUser
             profileEmail.text = emailUser
             profileUsername.text = usernameUser
-            profilePassword.text = passwordUser
+            profilePassword.text = "********"
         }
     }
 }
