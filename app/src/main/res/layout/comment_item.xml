@@ -14,20 +14,36 @@
         android:background="@color/white"
         tools:ignore="MissingConstraints"
         android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/commentAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewPostContent"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:text="commentauthor"/>
+
+            <TextView
+                android:id="@+id/commentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="commentdate"/>
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/commentauthor"
+            android:id="@+id/commentContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewPostContent"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp" />
-        <TextView
-            android:id="@+id/commentcontent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="commentcontent"/>
+
 
 
 

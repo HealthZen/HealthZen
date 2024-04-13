@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -19,17 +20,19 @@ class CommunityPostDetailActivity : AppCompatActivity() {
   private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var commentEditText: EditText
-    private lateinit var commentRecyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var commentAdapter: CommentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_post_detail)
-        buttonPostComment=findViewById(R.id.buttonPostComment)
+        buttonPostComment = findViewById(R.id.buttonPostComment)
         commentEditText = findViewById(R.id.commentEditText)
-        commentRecyclerView = findViewById(R.id.commentRecyclerView)
+        recyclerView = findViewById(R.id.commentRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        firebaseAuth= FirebaseAuth.getInstance()
-firestore=FirebaseFirestore.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         // Retrieve postId from intent extra
         val postId = intent.getStringExtra("postId")
@@ -43,60 +46,91 @@ firestore=FirebaseFirestore.getInstance()
             findViewById<TextView>(R.id.textViewPoster).text = posts?.poster
         }
 
+        //display comment based on postid
 
-        buttonPostComment.setOnClickListener {
 
-            var commentContent = commentEditText.text.toString()
 
-                if (commentContent.isNotEmpty() ) {
-                    val currentUser = firebaseAuth.currentUser
-                    if (currentUser != null) {
-                        val userId = currentUser!!.uid
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-                        val ref = firestore.collection("users").document(userId)
-                        ref.get().addOnSuccessListener {
-                            if (it != null) {
-                                val commentAuthor = it.data?.get("username")?.toString()
-                                val timestamp = FieldValue.serverTimestamp()
+        if (userId != null) {
+            // Query Firestore to get posts created by the current user
+            firestore.collection("comments")
+                .whereEqualTo("postId", postId)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val comments = mutableListOf<Comment>()
+                    for (document in documents) {
+                        val commentAuthor = document.getString("commentAuthor") ?: ""
+                        val commentContent = document.getString("commentContent") ?: ""
+                        val timestamp = document.getTimestamp("timestamp")
+                        val timestampString = timestamp?.toDate()?.toString() ?: ""
 
-                                val commentData = hashMapOf(
-                                    "commentContent" to commentContent,
-                                    "commentAuthor" to commentAuthor,
-                                    "commentAuthorId" to userId,
-                                    "postId" to postId,
-                                    "timestamp" to timestamp
-
-                                )
-                                firestore.collection("comments")
-                                    .add(commentData)
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            this@CommunityPostDetailActivity,
-                                            "Comment posted successfuuly",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        finish()
-                                        startActivity(intent)
-
-                                    }
-                                    .addOnFailureListener { e ->
-                                        Toast.makeText(
-                                            this@CommunityPostDetailActivity,
-                                            "Failed to post comment:${e.message}",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                            }
-                        }
-
+                        comments.add(Comment(commentAuthor, commentContent, timestampString))
                     }
+                    commentAdapter = CommentAdapter(comments)
+                    recyclerView.adapter = commentAdapter
                 }
-
+                .addOnFailureListener { exception ->
+                    // Handle errors
+                    exception.printStackTrace()
+                }
+        } else {
+            // User is not authenticated
+            // Handle this case accordingly (e.g., redirect to login)
         }
 
 
+        buttonPostComment.setOnClickListener {
+
+            var newCommentContent = commentEditText.text.toString()
+            if (newCommentContent.isNotEmpty()) {
+                val currentUser = firebaseAuth.currentUser
+                if (currentUser != null) {
+                    val userId = currentUser!!.uid
+
+                    val ref = firestore.collection("users").document(userId)
+                    ref.get().addOnSuccessListener {
+                        if (it != null) {
+                            val newCommentAuthor = it.data?.get("username")?.toString()
+                            val timestamp = FieldValue.serverTimestamp()
+
+                            val commentData = hashMapOf(
+                                "commentContent" to newCommentContent,
+                                "commentAuthor" to newCommentAuthor,
+                                "commentAuthorId" to userId,
+                                "postId" to postId,
+                                "timestamp" to timestamp
+
+                            )
+                            firestore.collection("comments")
+                                .add(commentData)
+                                .addOnSuccessListener {
+                                    Toast.makeText(
+                                        this@CommunityPostDetailActivity,
+                                        "Comment posted successfuuly",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    startActivity(Intent(this,AllPostsActivity::class.java))
+
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(
+                                        this@CommunityPostDetailActivity,
+                                        "Failed to post comment:${e.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }
+                    }
+
+                }
+            }
+
+        }
 
     }
+
+
 
     // Function to retrieve post details from database or elsewhere
     private fun getPostDetails(postId: String?, callback: (MyPostDataClass?) -> Unit) {
@@ -104,6 +138,7 @@ firestore=FirebaseFirestore.getInstance()
             callback(null)
             return
         }
+
 
         val db = FirebaseFirestore.getInstance()
 
