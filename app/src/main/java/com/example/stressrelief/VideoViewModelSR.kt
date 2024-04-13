@@ -23,10 +23,10 @@ class VideoViewModelSR : ViewModel() {
     var querySearch: String? = null
 
     init {
-        getVideoList()
+        getVideoListSR()
     }
 
-    fun getVideoList(){
+    fun getVideoListSR(){
         _isLoading.value = true
         val client = ApiConfig
             .getService()

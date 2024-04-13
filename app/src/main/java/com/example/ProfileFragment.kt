@@ -64,7 +64,6 @@ class ProfileFragment : Fragment() {
         profileName = view.findViewById(R.id.profileName)
         profileEmail = view.findViewById(R.id.profileEmail)
         profileUsername = view.findViewById(R.id.profileUsername)
-        profilePassword = view.findViewById(R.id.profilePassword)
         titleName = view.findViewById(R.id.titleName)
         titleUsername = view.findViewById(R.id.titleUsername)
 

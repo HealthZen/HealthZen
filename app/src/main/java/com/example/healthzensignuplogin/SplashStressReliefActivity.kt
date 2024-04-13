@@ -13,6 +13,6 @@ class SplashStressReliefActivity : AppCompatActivity() {
         android.os.Handler().postDelayed({
             startActivity(Intent(this, StressReliefActivity::class.java))
             finish() // Finish SplashActivity to prevent user from returning to it
-        }, 3000)
+        }, 2000)
     }
 }

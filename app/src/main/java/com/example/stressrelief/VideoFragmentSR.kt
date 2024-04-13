@@ -24,7 +24,7 @@ class VideoFragmentSR : Fragment() {
     private var _binding: FragmentVideoBinding? = null
     private val binding get() = _binding!!
     private var videoViewModel: VideoViewModelSR? = null
-    private val adapter = VideoAdapterSR()
+    private val adapter: VideoAdapterSR = VideoAdapterSR()
     private var isLoading = false
     private var isScroll = false
     private var currentItem = -1
@@ -56,7 +56,7 @@ class VideoFragmentSR : Fragment() {
                     isScroll = false
                     if (!isLoading){
                         if (!isAllVideoLoaded){
-                            videoViewModel?.getVideoList()
+                            videoViewModel?.getVideoListSR()
                         } else {
                             Toast.makeText(requireContext(), "All video loaded", Toast.LENGTH_SHORT).show()
                         }
@@ -115,7 +115,7 @@ class VideoFragmentSR : Fragment() {
                     videoViewModel?.querySearch = q
                     videoViewModel?.nextPageToken = null
                     adapter.clearAll()
-                    videoViewModel?.getVideoList()
+                    videoViewModel?.getVideoListSR()
                 }
                 return true
             }
@@ -125,7 +125,7 @@ class VideoFragmentSR : Fragment() {
                     videoViewModel?.querySearch = null
                     videoViewModel?.nextPageToken = null
                     adapter.clearAll()
-                    videoViewModel?.getVideoList()
+                    videoViewModel?.getVideoListSR()
                 }
                 return false
             }
