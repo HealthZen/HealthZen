@@ -80,6 +80,10 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
 
+
+
+        //retrieve comments
+
         firestore = FirebaseFirestore.getInstance()
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid

@@ -44,6 +44,18 @@
 
             android:text="commentcontent"/>
 
+            <Button
+                android:id="@+id/deleteCommentButton"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:text="Delete"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:onClick="onDeleteButtonClicked"
+                android:textSize="15sp"
+                android:backgroundTint="@color/lightgreen" />
+
 
 
         </LinearLayout>
