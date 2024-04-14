@@ -41,6 +41,15 @@
             android:text="Poster" />
 
         <TextView
+            android:id="@+id/postDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:text="Poster" />
+
+        <TextView
             android:id="@+id/textViewPostContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

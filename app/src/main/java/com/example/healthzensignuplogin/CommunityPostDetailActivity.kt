@@ -44,6 +44,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewPostTitle).text = posts?.posttitle
             findViewById<TextView>(R.id.textViewPostContent).text = posts?.postcontent
             findViewById<TextView>(R.id.textViewPoster).text = posts?.poster
+            findViewById<TextView>(R.id.postDate).text = posts?.date
         }
 
         //display comment based on postid
@@ -152,7 +153,10 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                     val postTitle = document.getString("postTitle") ?: ""
                     val postContent = document.getString("postContent") ?: ""
                     val poster = document.getString("poster") ?: ""
-                    val post = MyPostDataClass( postTitle, postContent, poster,postId)
+                    val timestamp = document.getTimestamp("timestamp")
+                    val timestampString = timestamp?.toDate()?.toString() ?: ""
+
+                    val post = MyPostDataClass( postTitle, postContent, poster,postId,timestampString)
                     callback(post)
                 } else {
                     // Post not found or document doesn't exist
@@ -165,4 +169,5 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                 exception.printStackTrace()
                 callback(null)
             }
-    }}
+    }
+}

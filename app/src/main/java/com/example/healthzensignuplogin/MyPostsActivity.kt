@@ -39,8 +39,11 @@ class MyPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener 
                         val postTitle = document.getString("postTitle") ?: ""
                         val postContent = document.getString("postContent") ?: ""
                         val poster = document.getString("poster") ?: ""
-                        val postId = document.id // Use Firestore document id as postId
-                        posts.add(MyPostDataClass(postTitle, postContent, poster, postId))
+                        val postId = document.id
+                        // Use Firestore document id as postId
+                        val timestamp = document.getTimestamp("timestamp")
+                        val timestampString = timestamp?.toDate()?.toString() ?: ""
+                        posts.add(MyPostDataClass(postTitle, postContent, poster,postId, timestampString))
                     }
                     adapter = MyPostsAdapter(posts, this)
                     recyclerView.adapter = adapter

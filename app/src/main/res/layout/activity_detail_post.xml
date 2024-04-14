@@ -20,23 +20,6 @@
             android:textSize="40sp"
             android:textStyle="bold"
             android:text="PostTitle"/>
-        <TextView
-            android:id="@+id/textViewTimestamp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="timestamp"
-            android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
-            android:textStyle="italic"/>
-
-        <TextView
-            android:id="@+id/textViewPostContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewPostTitle"
-            android:layout_marginTop="8dp"
-            android:textSize="30sp"
-            android:text="PostContent"  />
 
         <TextView
             android:id="@+id/postDate"
@@ -46,6 +29,16 @@
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:text="postDate"/>
+        <TextView
+            android:id="@+id/textViewPostContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewPostTitle"
+            android:layout_marginTop="8dp"
+            android:textSize="30sp"
+            android:text="PostContent"  />
+
+
 
         <Button
             android:id="@+id/deletePostButton"

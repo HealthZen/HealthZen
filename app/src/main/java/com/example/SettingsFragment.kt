@@ -59,7 +59,9 @@ class SettingsFragment : Fragment(), MyPostsAdapter.OnItemClickListener {
                         val postContent = document.getString("postContent") ?: ""
                         val poster = document.getString("poster") ?: ""
                         val postId = document.id // Use Firestore document id as postId
-                        posts.add(MyPostDataClass(postTitle, postContent, poster, postId))
+                        val timestamp = document.getTimestamp("timestamp")
+                        val timestampString = timestamp?.toDate()?.toString() ?: ""
+                        posts.add(MyPostDataClass(postTitle, postContent, poster,postId, timestampString))
                     }
                     adapter = MyPostsAdapter(posts, this@SettingsFragment)
                     recyclerView.adapter = adapter

@@ -16,6 +16,7 @@ class MyPostsAdapter(private val myPostsList: List<MyPostDataClass>, private val
         val postcontent: TextView = itemView.findViewById(R.id.postcontent)
         val poster: TextView = itemView.findViewById(R.id.poster)
         val cardView: CardView = itemView.findViewById(R.id.cardView)
+        val postDate:TextView=itemView.findViewById(R.id.postDate)
     }
 
     interface OnItemClickListener {
@@ -33,6 +34,7 @@ class MyPostsAdapter(private val myPostsList: List<MyPostDataClass>, private val
         holder.posttitle.text = currentItem.posttitle
         holder.postcontent.text = currentItem.postcontent
         holder.poster.text = currentItem.poster
+        holder.postDate.text = currentItem.date
 
         holder.cardView.setOnClickListener {
             listener.onItemClick(myPostsList[position])
