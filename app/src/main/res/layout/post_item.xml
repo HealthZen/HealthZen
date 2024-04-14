@@ -29,7 +29,14 @@
             android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
             android:textStyle="italic"/>
-
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="timestamp"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/postcontent"
