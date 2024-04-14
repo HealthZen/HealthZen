@@ -135,7 +135,7 @@ class ProfileFragment : Fragment() {
 
 
             view.findViewById<Button>(R.id.btnDone).setOnClickListener {
-               changeUserName(newUserName)
+                changeUserName(newUserName)
 
                 dialog.dismiss()
             }
@@ -267,7 +267,7 @@ class ProfileFragment : Fragment() {
             profileName.text = nameUser
             profileEmail.text = emailUser
             profileUsername.text = usernameUser
-            profilePassword.text = passwordUser
+            profilePassword.text = "********"
         }
     }
 }

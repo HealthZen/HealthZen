@@ -4,4 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>
+    <string name="search_video">Search Video</string>
+    <string name="title_video">Videos\n</string>
+    <string name="title_playlist">Playlist</string>
+    <string name="title_channel">Channel</string>
+    <string name="logo_channel">Channel Logo\n</string>
+    <string name="image_channel">Channel Image</string>
+    <string name="video_thumbnail">Video Thumbnail</string>
 </resources>

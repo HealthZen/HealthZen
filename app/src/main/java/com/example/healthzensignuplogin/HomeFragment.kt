@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.education.EducationActivity
+import com.example.education.SplashEducationActivity
 
 
 class HomeFragment : Fragment() {
@@ -21,16 +22,20 @@ class HomeFragment : Fragment() {
         val newsButton: Button = view.findViewById(R.id.newsButton)
         val educationButton: Button = view.findViewById(R.id.educationButton)
         val calendarButton: Button = view.findViewById(R.id.calendarButton)
+<<<<<<< HEAD
         val chatButton: Button = view.findViewById(R.id.chatButton)
+=======
+        val stressReliefButton: Button = view.findViewById(R.id.stressReliefButton)
+>>>>>>> master
 
         calendarButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
-            startActivity(Intent(activity, CalendarActivity::class.java))
+            startActivity(Intent(activity, SplashCalendarActivity::class.java))
         }
 
         educationButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
-            startActivity(Intent(activity, EducationActivity::class.java))
+            startActivity(Intent(activity, SplashEducationActivity::class.java))
         }
 
         // Set click listener for the newsButton
@@ -39,9 +44,15 @@ class HomeFragment : Fragment() {
             startActivity(Intent(activity, SplashActivity::class.java))
         }
 
+<<<<<<< HEAD
         chatButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
             startActivity(Intent(activity,AllPostsActivity::class.java))
+=======
+        stressReliefButton.setOnClickListener {
+            // Launch NewsActivity when newsButton is clicked
+            startActivity(Intent(activity, SplashStressReliefActivity::class.java))
+>>>>>>> master
         }
 
         return view
