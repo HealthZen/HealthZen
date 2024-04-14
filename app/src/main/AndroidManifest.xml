@@ -64,6 +64,9 @@
             android:name="com.example.education.EducationActivity"
             android:exported="false" />
         <activity
+            android:name="com.example.stressrelief.PlayerActivitySR"
+            android:exported="false" />
+        <activity
             android:name=".NewsFullActivity"
             android:exported="false" />
         <activity

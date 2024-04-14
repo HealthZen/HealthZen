@@ -11,7 +11,7 @@ import com.example.model.VideoYtModel
 
 class VideoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var oldItems = ArrayList<VideoYtModel.VideoItem>()
+    private var oldItemsSR = ArrayList<VideoYtModel.VideoItem>()
 
     class VideoHolder(itemView: ItemVideoBinding) : RecyclerView.ViewHolder(itemView.root){
         private val binding = itemView
@@ -41,23 +41,23 @@ class VideoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as VideoHolder).setData(oldItems[position])
+        (holder as VideoHolder).setData(oldItemsSR[position])
     }
 
     override fun getItemCount(): Int {
-        return oldItems.size
+        return oldItemsSR.size
     }
 
     fun setData(newList: List<VideoYtModel.VideoItem>, rv: RecyclerView){
-        val videoDiff = VideoDiffUtil(oldItems, newList)
+        val videoDiff = VideoDiffUtil(oldItemsSR, newList)
         val diff = DiffUtil.calculateDiff(videoDiff)
-        oldItems.addAll(newList)
+        oldItemsSR.addAll(newList)
         diff.dispatchUpdatesTo(this)
-        rv.scrollToPosition(oldItems.size - newList.size)
+        rv.scrollToPosition(oldItemsSR.size - newList.size)
     }
 
     fun clearAll(){
-        oldItems.clear()
+        oldItemsSR.clear()
         notifyDataSetChanged()
     }
 

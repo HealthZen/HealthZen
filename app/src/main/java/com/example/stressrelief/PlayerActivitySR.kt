@@ -9,9 +9,9 @@ import com.example.healthzensignuplogin.R
 class PlayerActivitySR : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_player)
+        setContentView(R.layout.activity_player_sr)
 
-        val webView = findViewById<WebView>(R.id.web_view)
+        val webView = findViewById<WebView>(R.id.web_viewSR)
 
         // Get the video ID from the intent extra
         val videoId = intent.getStringExtra("video_id")

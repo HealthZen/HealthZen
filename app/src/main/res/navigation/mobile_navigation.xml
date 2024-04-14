@@ -22,4 +22,8 @@
         android:name="com.example.education.ChannelFragment"
         android:label="Channel"
         tools:layout="@layout/fragment_channel" />
+
+
+
+
 </navigation>
