@@ -181,42 +181,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:layout_marginTop="16dp"
-                android:background="@drawable/white_background"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <Button
-                    android:id="@+id/chatButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/lightgreen"
-                    android:text="Community"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    app:cornerRadius="20dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="Engage with real-time chat and conversations"
-                    android:textAlignment="center"
-                    android:textColor="@color/brown"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-=======
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="Engage with real-time chat and conversations"
                 android:textAlignment="center"
                 android:textColor="@color/brown"
                 android:textSize="12sp" />
->>>>>>> master
 
         </LinearLayout>
 
