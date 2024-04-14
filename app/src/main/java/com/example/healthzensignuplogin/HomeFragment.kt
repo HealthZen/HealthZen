@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
         val educationButton: Button = view.findViewById(R.id.educationButton)
         val calendarButton: Button = view.findViewById(R.id.calendarButton)
         val stressReliefButton: Button = view.findViewById(R.id.stressReliefButton)
-
+        val chatButton: Button = view.findViewById(R.id.chatButton)
         calendarButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
             startActivity(Intent(activity, SplashCalendarActivity::class.java))
@@ -43,6 +43,10 @@ class HomeFragment : Fragment() {
         stressReliefButton.setOnClickListener {
             // Launch NewsActivity when newsButton is clicked
             startActivity(Intent(activity, SplashStressReliefActivity::class.java))
+        }
+        chatButton.setOnClickListener {
+            // Launch NewsActivity when newsButton is clicked
+            startActivity(Intent(activity, AllPostsActivity::class.java))
         }
 
         return view

@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.SettingsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -71,6 +72,11 @@ class PostActivity : AppCompatActivity() {
                                         "post successfuuly",
                                         Toast.LENGTH_SHORT
                                     ).show()
+//                                    val fragment = SettingsFragment()
+//                                    supportFragmentManager.beginTransaction()
+//                                        .replace(R.id.community_container, fragment)
+//                                        .addToBackStack(null)
+//                                        .commit()
                                     startActivity(Intent(this,AllPostsActivity::class.java))
 
                                 }

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AllPostsActivity"
-    android:background="@drawable/profilebkg">
+    android:background="@drawable/profilebkg"
+    android:id="@+id/community_container">
 
 
     <Button

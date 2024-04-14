@@ -1,16 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.SettingsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="setting Fragment"
-        android:textSize="36sp"
-        android:textColor="@color/brown"
-        android:gravity="top"/>
+        android:orientation="vertical"
 
-</FrameLayout>
+        android:background="@drawable/profilebkg"
+        android:id="@+id/community_container"
+        tools:context="com.example.SettingsFragment">
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/goPostButton"
+            android:layout_marginTop="10dp"
+            android:text="post"
+            android:backgroundTint="@color/lightgreen"
+            />
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_posts_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
