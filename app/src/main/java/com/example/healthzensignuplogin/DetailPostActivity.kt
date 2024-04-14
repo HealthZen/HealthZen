@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.healthzensignuplogin.MyPostDataClass
 import com.example.healthzensignuplogin.R
@@ -16,13 +18,17 @@ class DetailPostActivity : AppCompatActivity() {
     private lateinit var editPostButton:Button
     private lateinit var deletePostButton:Button
     private lateinit var firebaseAuth: FirebaseAuth
-
+    private lateinit var firestore:FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var commentAdapter: CommentAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
         editPostButton=findViewById(R.id.editPostButton)
         deletePostButton=findViewById(R.id.deletePostButton)
         firebaseAuth=FirebaseAuth.getInstance()
+        recyclerView = findViewById(R.id.commentRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Retrieve postId from intent extra
         val postId = intent.getStringExtra("postId")
@@ -72,6 +78,39 @@ class DetailPostActivity : AppCompatActivity() {
             val dialog = builder.create()
             dialog.show()
         }
+
+
+        firestore = FirebaseFirestore.getInstance()
+
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (userId != null) {
+            // Query Firestore to get posts created by the current user
+            firestore.collection("comments")
+                .whereEqualTo("postId", postId)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val comments = mutableListOf<Comment>()
+                    for (document in documents) {
+                        val commentAuthor = document.getString("commentAuthor") ?: ""
+                        val commentContent = document.getString("commentContent") ?: ""
+                        val timestamp = document.getTimestamp("timestamp")
+                        val timestampString = timestamp?.toDate()?.toString() ?: ""
+
+                        comments.add(Comment(commentAuthor, commentContent, timestampString))
+                    }
+                    commentAdapter = CommentAdapter(comments)
+                    recyclerView.adapter = commentAdapter
+                }
+                .addOnFailureListener { exception ->
+                    // Handle errors
+                    exception.printStackTrace()
+                }
+        } else {
+            // User is not authenticated
+            // Handle this case accordingly (e.g., redirect to login)
+        }
+
 
     }
 
