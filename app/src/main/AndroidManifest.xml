@@ -16,7 +16,15 @@
         android:theme="@style/Theme.HealthZenSignUpLogIn"
         tools:targetApi="31">
         <activity
-
+            android:name="com.example.meditation.SplashMeditationActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.meditation.PlayerActivityM"
+            android:exported="false" />
+        <activity
+            android:name="com.example.meditation.MeditationActivity"
+            android:exported="false" />
+        <activity
             android:name=".CommunityPostDetailActivity"
             android:exported="false" />
         <activity
@@ -25,7 +33,6 @@
         <activity
             android:name=".AllPostsActivity"
             android:exported="false" />
-
         <activity
             android:name=".EditMyPostActivity"
             android:exported="false" />
@@ -35,7 +42,6 @@
         <activity
             android:name=".PostActivity"
             android:exported="false" />
-
         <activity
             android:name="com.example.stressrelief.StressReliefActivity"
             android:exported="false" />
@@ -50,7 +56,6 @@
             android:exported="false" />
         <activity
             android:name="com.example.education.PlayerActivity"
-
             android:exported="false" />
         <activity
             android:name=".WeekViewActivity"

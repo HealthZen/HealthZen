@@ -12,18 +12,16 @@
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:fontFamily="monospace"
         android:text="HealthZen"
         android:textColor="@color/brown"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +44,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/white_background"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/newsButton"
@@ -55,7 +53,7 @@
                 android:backgroundTint="@color/lightgreen"
                 android:text="News"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -65,7 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Keep updated with the current health news"
                 android:textColor="@color/brown"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -76,7 +74,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/white_background"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/calendarButton"
@@ -85,7 +83,7 @@
                 android:backgroundTint="@color/lightgreen"
                 android:text="Calendar"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -96,7 +94,7 @@
                 android:text="Manage your schedule seamlessly"
                 android:textAlignment="center"
                 android:textColor="@color/brown"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -106,16 +104,16 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/white_background"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/stressReliefButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/lightgreen"
-                android:text="Stress Relief"
+                android:text="Relaxing Music"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -123,10 +121,38 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Cope with stress by following meditation videos and listening to calming music."
+                android:text="Relax your mind by listening to calming music."
                 android:textAlignment="center"
                 android:textColor="@color/brown"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_background"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/meditationButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/lightgreen"
+                android:text="Meditation"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:cornerRadius="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="Cope with stress by following meditation videos"
+                android:textColor="@color/brown"
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -136,7 +162,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/white_background"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/educationButton"
@@ -145,7 +171,7 @@
                 android:backgroundTint="@color/lightgreen"
                 android:text="Education"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -156,7 +182,7 @@
                 android:text="Learn from instructional videos"
                 android:textAlignment="center"
                 android:textColor="@color/brown"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -166,7 +192,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/white_background"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/chatButton"
@@ -175,7 +201,7 @@
                 android:backgroundTint="@color/lightgreen"
                 android:text="Chat"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -186,12 +212,27 @@
                 android:text="Engage with real-time chat and conversations"
                 android:textAlignment="center"
                 android:textColor="@color/brown"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:fontFamily="monospace"
+        android:text="Bringing out the best in you"
+        android:textColor="@color/brown"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="30dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
