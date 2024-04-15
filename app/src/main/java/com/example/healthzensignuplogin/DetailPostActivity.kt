@@ -99,6 +99,7 @@ class DetailPostActivity : AppCompatActivity() {
                         val commentId=document.id
                         val commentAuthor = document.getString("commentAuthor") ?: ""
                         val commentContent = document.getString("commentContent") ?: ""
+                        val commentAuthorId = document.getString(" commentAuthorId ") ?: ""
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
