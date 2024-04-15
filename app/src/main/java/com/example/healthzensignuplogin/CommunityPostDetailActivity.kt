@@ -61,12 +61,13 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener { documents ->
                     val comments = mutableListOf<Comment>()
                     for (document in documents) {
+                        val commentId=document.id
                         val commentAuthor = document.getString("commentAuthor") ?: ""
                         val commentContent = document.getString("commentContent") ?: ""
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
-                        comments.add(Comment(commentAuthor, commentContent, timestampString))
+                        comments.add(Comment(commentAuthor, commentContent, timestampString,commentId))
                     }
                     commentAdapter = CommentAdapter(comments)
                     recyclerView.adapter = commentAdapter

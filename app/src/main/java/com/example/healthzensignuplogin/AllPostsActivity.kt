@@ -41,6 +41,7 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
                 .addOnSuccessListener { documents ->
                     val posts = mutableListOf<MyPostDataClass>()
                     for (document in documents) {
+
                         val postTitle = document.getString("postTitle") ?: ""
                         val postContent = document.getString("postContent") ?: ""
                         val poster = document.getString("poster") ?: ""
