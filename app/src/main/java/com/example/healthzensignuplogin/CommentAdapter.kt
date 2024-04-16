@@ -46,20 +46,20 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
 
         // Set the click listener for the delete button
         holder.deleteCommentButton.setOnClickListener {
-            showDeleteConfirmationDialog(holder.getContext(), currentItem.commentId)
+            showDeleteConfirmationDialog(holder.getContext(), currentItem.commentId,currentItem.postId)
         }
     }
 
     override fun getItemCount() = commentList.size
 
     // Method to show the delete confirmation dialog
-    private fun showDeleteConfirmationDialog(context: Context, commentId: String) {
+    private fun showDeleteConfirmationDialog(context: Context, commentId: String,postId: String) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Confirm Delete")
         builder.setMessage("Are you sure you want to delete this comment?")
         builder.setPositiveButton("Yes") { _, _ ->
             // Delete the comment
-            deleteComment(context, commentId)
+            deleteComment(context, commentId,postId)
         }
         builder.setNegativeButton("No") { dialog, _ ->
             dialog.dismiss()
@@ -69,32 +69,54 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
     }
 
     // Method to delete the comment
-    private fun deleteComment(context: Context, commentId: String) {
+    private fun deleteComment(context: Context, commentId: String,postId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val db = FirebaseFirestore.getInstance()
         if (userId != null) {
+            db.collection("posts")
+                .document(postId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val commentPostAuthorId = document.getString("userId") ?: ""
+                        if (userId == commentId || userId == commentPostAuthorId) {
 
+                            db.collection("comments").document(commentId)
+                                .delete()
+                                .addOnSuccessListener {
+                                    // Remove the deleted comment from the commentList
+                                    val position =
+                                        commentList.indexOfFirst { it.commentId == commentId }
+                                    if (position != -1) {
+                                        commentList.removeAt(position)
+                                        notifyItemRemoved(position) // Notify the adapter that the item has been removed
+                                        Toast.makeText(
+                                            context,
+                                            "Comment deleted successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Failed to find comment in list",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(
+                                        context,
+                                        "Failed to delete comment: ${e.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        } else {
+                            Toast.makeText(context, "no authorization", Toast.LENGTH_SHORT).show()
+                        }
 
-            val db = FirebaseFirestore.getInstance()
-            db.collection("comments").document(commentId)
-                .delete()
-                .addOnSuccessListener {
-                    // Remove the deleted comment from the commentList
-                    val position = commentList.indexOfFirst { it.commentId == commentId }
-                    if (position != -1) {
-                        commentList.removeAt(position)
-                        notifyItemRemoved(position) // Notify the adapter that the item has been removed
-                        Toast.makeText(context, "Comment deleted successfully", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Failed to find comment in list", Toast.LENGTH_SHORT).show()
                     }
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(context, "Failed to delete comment: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
         }
+
     }
-
-
 }

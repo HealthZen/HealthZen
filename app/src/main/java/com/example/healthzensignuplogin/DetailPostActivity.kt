@@ -100,10 +100,11 @@ class DetailPostActivity : AppCompatActivity() {
                         val commentAuthor = document.getString("commentAuthor") ?: ""
                         val commentContent = document.getString("commentContent") ?: ""
                         val commentAuthorId = document.getString(" commentAuthorId ") ?: ""
+                        val postId = document.getString("postId") ?: ""
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
-                        comments.add(Comment(commentAuthor, commentContent, timestampString,commentId))
+                        comments.add(Comment(commentAuthor, commentContent, timestampString,commentId,postId,commentAuthorId))
                     }
                     commentAdapter = CommentAdapter(comments)
                     recyclerView.adapter = commentAdapter
