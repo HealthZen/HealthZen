@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MyPostsAdapter(private val originalMyPostsList: List<MyPostDataClass>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<MyPostsAdapter.ViewHolder>() {
 
-    private var filteredMyPostsList: List<MyPostDataClass> = originalMyPostsList
+    private var filteredMyPostsList: List<MyPostDataClass> = originalMyPostsList.sortedByDescending { it.date }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val posttitle: TextView = itemView.findViewById(R.id.posttitle)
