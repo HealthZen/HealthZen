@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.education.EducationActivity
 import com.example.education.SplashEducationActivity
 import com.example.meditation.SplashMeditationActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class HomeFragment : Fragment() {
@@ -44,7 +48,14 @@ class HomeFragment : Fragment() {
         }
 
         chatButton.setOnClickListener {
-            startActivity(Intent(activity, AllPostsActivity::class.java))
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Premium Access Required")
+            builder.setMessage("Get premium to access chat.")
+            builder.setPositiveButton("OK") { dialog, which ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
 
         meditationButton.setOnClickListener {

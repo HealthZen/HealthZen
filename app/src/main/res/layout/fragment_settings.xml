@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Explore the latest updates from the community"
+                android:text="Explore the latest updates from community"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
 
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="View and manage your own posts and updates"
+                android:text="View and manage my own posts"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
 

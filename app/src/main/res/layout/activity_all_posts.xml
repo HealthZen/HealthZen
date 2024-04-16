@@ -7,6 +7,17 @@
     tools:context=".AllPostsActivity"
     android:background="@drawable/profilebkg"
     android:id="@+id/community_container">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Community Posts"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        android:textColor="@color/lightgreen"
+        />
 
 
     <Button
@@ -16,14 +27,12 @@
         android:layout_marginTop="10dp"
         android:text="post"
         android:backgroundTint="@color/lightgreen"
-        />
-
-
-
+        android:layout_margin="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_posts_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 </LinearLayout>
