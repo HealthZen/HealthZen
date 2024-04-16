@@ -4,19 +4,22 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
-class MyPostsAdapter(private val myPostsList: List<MyPostDataClass>, private val listener: OnItemClickListener) :
+class MyPostsAdapter(private val originalMyPostsList: List<MyPostDataClass>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<MyPostsAdapter.ViewHolder>() {
+
+    private var filteredMyPostsList: List<MyPostDataClass> = originalMyPostsList
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val posttitle: TextView = itemView.findViewById(R.id.posttitle)
         val postcontent: TextView = itemView.findViewById(R.id.postcontent)
         val poster: TextView = itemView.findViewById(R.id.poster)
         val cardView: CardView = itemView.findViewById(R.id.cardView)
-        val postDate:TextView=itemView.findViewById(R.id.postDate)
+        val postDate: TextView = itemView.findViewById(R.id.postDate)
     }
 
     interface OnItemClickListener {
@@ -30,16 +33,30 @@ class MyPostsAdapter(private val myPostsList: List<MyPostDataClass>, private val
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = myPostsList[position]
+        val currentItem = filteredMyPostsList[position]
         holder.posttitle.text = currentItem.posttitle
         holder.postcontent.text = currentItem.postcontent
         holder.poster.text = currentItem.poster
         holder.postDate.text = currentItem.date
 
         holder.cardView.setOnClickListener {
-            listener.onItemClick(myPostsList[position])
+            listener.onItemClick(filteredMyPostsList[position])
         }
     }
 
-    override fun getItemCount() = myPostsList.size
+    override fun getItemCount() = filteredMyPostsList.size
+
+    fun filterPosts(query: String) {
+        filteredMyPostsList = if (query.isEmpty()) {
+            originalMyPostsList // If the query is empty, show all original posts
+        } else {
+            originalMyPostsList.filter { post ->
+                post.posttitle.contains(query, ignoreCase = true) ||
+                        post.postcontent.contains(query, ignoreCase = true) ||
+                        post.poster.contains(query, ignoreCase = true)
+            }
+        }
+        notifyDataSetChanged() // Notify adapter of dataset changes
+    }
 }
+

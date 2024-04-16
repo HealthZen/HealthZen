@@ -15,10 +15,17 @@
         android:layout_marginTop="5dp"
         android:textSize="30sp"
         android:textStyle="bold"
-
+        android:layout_marginVertical="10dp"
         android:textColor="@color/lightgreen"
         />
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:queryHint="Search..."
+        android:iconifiedByDefault="false" />
 
     <Button
         android:layout_width="match_parent"
@@ -33,6 +40,8 @@
         android:id="@+id/my_posts_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
 
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.healthzensignuplogin
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
     private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var goPostButton: Button
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,7 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
 
         recyclerView = findViewById(R.id.my_posts_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        searchView = findViewById(R.id.searchView)
         goPostButton=findViewById(R.id.goPostButton)
         goPostButton.setOnClickListener {
             startActivity(Intent(this,PostActivity::class.java))
@@ -48,7 +51,6 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
                         val postId = document.id // Use Firestore document id as postId
                         val timestamp = document.getTimestamp("timestamp")
                       val timestampString = timestamp?.toDate()?.toString() ?: ""
-
                         posts.add(MyPostDataClass(postTitle, postContent, poster,postId, timestampString))
                     }
                     adapter = MyPostsAdapter(posts, this)
@@ -62,6 +64,20 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
             // User is not authenticated
             // Handle this case accordingly (e.g., redirect to login)
         }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Do nothing on submit
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { query ->
+                    adapter.filterPosts(query) // Call filterPosts() on adapter
+                }
+                return true
+            }
+    })
     }
     override fun onItemClick(post: MyPostDataClass) {
         // Handle click event, navigate to detail post page
@@ -69,5 +85,6 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
         intent.putExtra("postId", post.postId) // Pass postId to detail post activity
         startActivity(intent)
     }
-}
+    }
+
 
