@@ -61,16 +61,56 @@ class DetailPostActivity : AppCompatActivity() {
                     db.collection("posts").document(postId)
                         .delete()
                         .addOnSuccessListener {
-                            Toast.makeText(this@DetailPostActivity, "Post deleted successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@DetailPostActivity, MyPostsActivity::class.java))
-                            finish()
+
+                            db.collection("comments")
+                                .whereEqualTo("postId", postId)
+                                .get()
+                                .addOnSuccessListener { querySnapshot ->
+                                    val batch = db.batch()
+                                    for (document in querySnapshot.documents) {
+                                        batch.delete(document.reference)
+                                    }
+                                    batch.commit()
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this@DetailPostActivity,
+                                                "Post and comments deleted successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            startActivity(
+                                                Intent(
+                                                    this@DetailPostActivity,
+                                                    MyPostsActivity::class.java
+                                                )
+                                            )
+                                            finish()
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Toast.makeText(
+                                                this@DetailPostActivity,
+                                                "Failed to delete post: ${e.message}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(
+                                        this@DetailPostActivity,
+                                        "Failed to delete post: ${e.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
                         }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this@DetailPostActivity, "Failed to delete post: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
+
+
+                }
+                else {
                     Toast.makeText(this@DetailPostActivity, "User not logged in", Toast.LENGTH_SHORT).show()
                 }
+
+
             }
             builder.setNegativeButton("No") { dialog, which ->
                 dialog.dismiss()
@@ -78,7 +118,6 @@ class DetailPostActivity : AppCompatActivity() {
             val dialog = builder.create()
             dialog.show()
         }
-
 
 
 
