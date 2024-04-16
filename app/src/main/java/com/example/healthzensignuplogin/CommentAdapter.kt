@@ -72,6 +72,8 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
     private fun deleteComment(context: Context, commentId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
+
+
             val db = FirebaseFirestore.getInstance()
             db.collection("comments").document(commentId)
                 .delete()

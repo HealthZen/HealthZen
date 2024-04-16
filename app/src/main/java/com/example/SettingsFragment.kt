@@ -15,73 +15,56 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.education.SplashEducationActivity
+import com.example.healthzensignuplogin.AllPostsActivity
+import com.example.healthzensignuplogin.MyPostsActivity
+import com.example.healthzensignuplogin.SplashActivity
+import com.example.healthzensignuplogin.SplashCalendarActivity
+import com.example.healthzensignuplogin.SplashStressReliefActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 
-class SettingsFragment : Fragment(), MyPostsAdapter.OnItemClickListener {
+class SettingsFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: MyPostsAdapter
+
     private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var goPostButton: Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_all_posts, container, false)
+        val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
-        recyclerView = view.findViewById(R.id.my_posts_recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        goPostButton = view.findViewById(R.id.goPostButton)
-        goPostButton.setOnClickListener {
+
+        val CommunityButton: Button = view.findViewById(R.id.CommunityButton)
+        val AddPostButton: Button = view.findViewById(R.id.AddPostButton)
+        val MyPostsButton: Button = view.findViewById(R.id.MyPostsButton)
+        val NotificationButton: Button = view.findViewById(R.id.NotificationButton)
+
+        CommunityButton.setOnClickListener {
+            startActivity(Intent(activity, AllPostsActivity::class.java))
+        }
+
+        AddPostButton.setOnClickListener {
             startActivity(Intent(activity, PostActivity::class.java))
         }
 
-        // Initialize Firestore
-        firestore = FirebaseFirestore.getInstance()
-        firebaseAuth = FirebaseAuth.getInstance()
-
-        // Fetch posts from Firestore
-        val userId = firebaseAuth.currentUser?.uid
-        if (userId != null) {
-            // Query Firestore to get posts created by the current user
-            firestore.collection("posts")
-                .get()
-                .addOnSuccessListener { documents ->
-                    val posts = mutableListOf<MyPostDataClass>()
-                    for (document in documents) {
-                        val postTitle = document.getString("postTitle") ?: ""
-                        val postContent = document.getString("postContent") ?: ""
-                        val poster = document.getString("poster") ?: ""
-                        val postId = document.id // Use Firestore document id as postId
-                        val timestamp = document.getTimestamp("timestamp")
-                        val timestampString = timestamp?.toDate()?.toString() ?: ""
-                        posts.add(MyPostDataClass(postTitle, postContent, poster,postId, timestampString))
-                    }
-                    adapter = MyPostsAdapter(posts, this@SettingsFragment)
-                    recyclerView.adapter = adapter
-                }
-                .addOnFailureListener { exception ->
-                    // Handle errors
-                    exception.printStackTrace()
-                }
-        } else {
-            // User is not authenticated
-            // Handle this case accordingly (e.g., redirect to login)
+        MyPostsButton.setOnClickListener {
+            startActivity(Intent(activity, MyPostsActivity::class.java))
         }
+
+        NotificationButton.setOnClickListener {
+            startActivity(Intent(activity, SplashStressReliefActivity::class.java))
+        }
+
+
 
         return view
     }
-
-    override fun onItemClick(post: MyPostDataClass) {
-        // Handle click event, navigate to detail post page
-        val intent = Intent(activity, CommunityPostDetailActivity::class.java)
-        intent.putExtra("postId", post.postId) // Pass postId to detail post activity
-        startActivity(intent)
-    }
 }
+

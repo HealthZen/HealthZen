@@ -6,13 +6,16 @@
         android:title="Home"
         android:icon="@drawable/baseline_home_24"/>
     <item
+        android:id="@+id/bottom_settings"
+        android:title="Community"
+        android:icon="@drawable/outline_chat_24"/>
+
+    <item
         android:id="@+id/bottom_profile"
         android:title="Profile"
         android:icon="@drawable/baseline_person_24"/>
-    <item
-        android:id="@+id/bottom_settings"
-        android:title="Community"
-        android:icon="@drawable/baseline_settings_24"/>
+
+
 
 
 </menu>
