@@ -1,27 +1,43 @@
 package com.example
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.MediaStore.Audio.Media
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.healthzensignuplogin.CalendarActivity
 import com.example.healthzensignuplogin.LogInActivity
 import com.example.healthzensignuplogin.MyPostsActivity
-
-import com.example.healthzensignuplogin.NewsActivity
 import com.example.healthzensignuplogin.R
 import com.example.healthzensignuplogin.SignUpActivity
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.util.UUID
 
 class ProfileFragment : Fragment() {
 
@@ -37,6 +53,14 @@ class ProfileFragment : Fragment() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var editButton: Button
     private lateinit var postsNumber:TextView
+
+    private lateinit var profilePic: ImageView
+    private lateinit var imageUri: Uri
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
+    private lateinit var getContent: ActivityResultLauncher<String>
+    private lateinit var progressBar: ProgressBar
+
 
     // Add variables to store user data
     private var nameUser: String? = null
@@ -55,13 +79,24 @@ class ProfileFragment : Fragment() {
         editButton=view.findViewById(R.id.editButton)
         postsNumber=view.findViewById(R.id.postsNumber)
 
+        profilePic =view.findViewById(R.id.profileImg)
+
+
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.getReference()
+
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
 
-
-
-
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null) {
+                // Handle the selected image URI here
+                imageUri = uri
+                profilePic.setImageURI(imageUri)
+                uploadPicture()
+            }
+        }
         return view
     }
 
@@ -148,9 +183,38 @@ class ProfileFragment : Fragment() {
             dialog.show()
 
         }
+        profilePic.setOnClickListener {
+            choosePicture()
+        }
+    }
 
+    private fun choosePicture() {
+        getContent.launch("image/*")
+    }
 
+    private fun uploadPicture() {
+        if (imageUri == null) {
+            Toast.makeText(requireContext(), "No image selected", Toast.LENGTH_SHORT).show()
+            return
+        }
 
+        progressBar.visibility = View.VISIBLE
+
+        val randomKey = UUID.randomUUID().toString()
+        val imagesRef = storageReference.child("images/$randomKey")
+
+        imagesRef.putFile(imageUri!!)
+            .addOnSuccessListener { taskSnapshot ->
+                progressBar.visibility = View.GONE
+                view?.let { Snackbar.make(it.findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show() }
+            }
+            .addOnFailureListener { exception ->
+                progressBar.visibility = View.GONE
+                Toast.makeText(requireContext(), "Failed to Upload: ${exception.message}", Toast.LENGTH_LONG).show()
+            }
+            .addOnProgressListener { taskSnapshot ->
+                val progressPercent = (100.00 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
+            }
     }
 
     //change username
@@ -244,8 +308,9 @@ class ProfileFragment : Fragment() {
     }
 
 
+
     // Function to set user data
-    fun setUserData(name: String?, email: String?, username: String?, password: String?) {
+    private fun setUserData(name: String?, email: String?, username: String?, password: String?) {
         nameUser = name
         emailUser = email
         usernameUser = username
