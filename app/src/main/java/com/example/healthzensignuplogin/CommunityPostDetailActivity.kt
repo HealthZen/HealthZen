@@ -1,8 +1,10 @@
 package com.example.healthzensignuplogin
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -22,12 +24,14 @@ class CommunityPostDetailActivity : AppCompatActivity() {
     private lateinit var commentEditText: EditText
     private lateinit var recyclerView: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
-
+    private lateinit var favoriteBtn:Button
+    var isLiked = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_post_detail)
         buttonPostComment = findViewById(R.id.buttonPostComment)
         commentEditText = findViewById(R.id.commentEditText)
+        favoriteBtn=findViewById(R.id.favoriteBtn)
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -84,6 +88,27 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         }
 
 
+
+        val userid = userId ?: ""
+        val postid = postId ?: ""
+      // Initialize isLiked variable as false
+
+        favoriteBtn.setOnClickListener {
+            // Toggle the liked status when the button is clicked
+            isLiked = !isLiked // Toggle the value of isLiked
+
+            if (isLiked) {
+                // If the post is not yet liked, add the like
+                checkLikedPostsSubcollectionExists(userid, postid)
+            } else {
+                // If the post is already liked, remove the like
+                removeLikedPost(userid, postid)
+            }
+        }
+
+
+
+
         buttonPostComment.setOnClickListener {
 
             var newCommentContent = commentEditText.text.toString()
@@ -136,7 +161,95 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
     }
 
+    // Function to check if the liked_posts subcollection exists for a user
+    fun checkLikedPostsSubcollectionExists(userId: String, postId: String) {
+        val userDocRef = firestore.collection("users").document(userId)
+        userDocRef.collection("liked_posts").document(postId).get() // Check if the specific post document exists
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                    // Post document exists, so the post has already been liked
+                    favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0)
+                } else {
+                    // Post document doesn't exist, indicating the post hasn't been liked yet
+                    createUserLikedPostsSubcollection(userId, postId)
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle any errors
+                Log.e(TAG, "Error checking liked_posts subcollection: $exception")
+            }
+    }
 
+    private fun createUserLikedPostsSubcollection(userId: String, postId: String) {
+        val userDocRef = firestore.collection("users").document(userId)
+        userDocRef.collection("liked_posts").document(postId).set(emptyMap<String, Any>()) // Specify the type explicitly
+            .addOnSuccessListener {
+                Log.d(TAG, "Liked posts subcollection created for user $userId")
+                addLikedPost(userId, postId)
+            }
+            .addOnFailureListener { exception ->
+                // Handle any errors
+                Log.e(TAG, "Error creating liked_posts subcollection: $exception")
+            }
+    }
+
+    fun addLikedPost(userId: String, postId: String) {
+        val userDocRef = firestore.collection("users").document(userId)
+        val likedPostsCollectionRef = userDocRef.collection("liked_posts")
+
+        // Create a new document in the "liked_posts" subcollection with the post ID as the document ID
+        val likedPostData = hashMapOf(
+            "timestamp" to System.currentTimeMillis(),
+           "postId" to postId
+        )
+
+        likedPostsCollectionRef.document(postId)
+            .set(likedPostData)
+            .addOnSuccessListener {
+                favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0) // Set favorite button to red icon
+                isLiked = true
+                Toast.makeText(
+                    this@CommunityPostDetailActivity,
+                    "Liked post added successfully for user",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { exception ->
+
+                Toast.makeText(
+                    this@CommunityPostDetailActivity,
+                    "Error adding liked post for user $userId: $exception",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+
+    fun removeLikedPost(userId: String, postId: String) {
+        val userDocRef = firestore.collection("users").document(userId)
+        val likedPostsCollectionRef = userDocRef.collection("liked_posts")
+
+
+        likedPostsCollectionRef.document(postId)
+            .delete()
+            .addOnSuccessListener {
+                favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.black_heart_icon, 0, 0) // Set favorite button to red icon
+                isLiked = false
+                Toast.makeText(
+                    this@CommunityPostDetailActivity,
+                    "Liked post removed successfully for user",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener { exception ->
+
+                Toast.makeText(
+                    this@CommunityPostDetailActivity,
+                    "Error adding liked post for user $userId: $exception",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
 
     // Function to retrieve post details from database or elsewhere
     private fun getPostDetails(postId: String?, callback: (MyPostDataClass?) -> Unit) {

@@ -57,7 +57,15 @@
             android:layout_marginTop="8dp"
             android:textSize="25sp"
             android:text="PostContent"/>
+        <Button
+            android:id="@+id/favoriteBtn"
+            android:layout_marginTop="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:drawableTop="@drawable/black_heart_icon"
+            android:backgroundTint="@color/white"
 
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -102,6 +110,8 @@
             android:layout_marginTop="5dp"/>
 
     </LinearLayout>
+
+
 
 </LinearLayout>
 
