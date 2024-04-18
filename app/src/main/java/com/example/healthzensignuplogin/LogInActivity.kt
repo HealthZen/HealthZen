@@ -1,5 +1,6 @@
 package com.example.healthzensignuplogin
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -7,15 +8,26 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ProfileFragment
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LogInActivity : AppCompatActivity() {
+
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     private lateinit var auth: FirebaseAuth
     private lateinit var loginEmail: EditText
@@ -32,12 +44,22 @@ class LogInActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-
         loginEmail = findViewById(R.id.login_email)
         loginPassword = findViewById(R.id.login_password)
         loginButton = findViewById(R.id.login_button)
         signupRedirectText = findViewById(R.id.signupRedirectText)
         forgetpassword=findViewById(R.id.forgot_password)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this , gso)
+
+        findViewById<ImageView>(R.id.googleLogin).setOnClickListener{
+            googleSigIn();
+        }
 
         loginButton.setOnClickListener {
             val email = loginEmail.text.toString().trim()
@@ -92,17 +114,47 @@ class LogInActivity : AppCompatActivity() {
                 dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
             }
             dialog.show()
-
-
         }
-
 
         signupRedirectText.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-
-
     }
+
+    private fun googleSigIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        launcher.launch(signInIntent)
+    }
+
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+                if (result.resultCode == Activity.RESULT_OK){
+
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                manageResult(task)
+        }
+    }
+
+    private fun manageResult(text: Task<GoogleSignInAccount>) {
+        val account: GoogleSignInAccount? = text.result
+
+        if (account != null) {
+            // Do something with the signed-in account, e.g., display user info
+            val displayName = account.displayName
+            val email = account.email
+
+            // Show a toast with user info
+            Toast.makeText(this, "Signed in as $displayName ($email)", Toast.LENGTH_LONG).show()
+
+            // Proceed to MainActivity or perform additional actions
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else {
+            // Handle null account, maybe show an error message
+            Toast.makeText(this, "Failed to sign in with Google", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun fetchUserDataAndPassToProfile(userId: String) {
         firestore.collection("users").document(userId)
             .get()
