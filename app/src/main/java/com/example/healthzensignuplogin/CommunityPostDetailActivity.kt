@@ -61,10 +61,12 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        if (userId != null) {
+        if (userId != null&&postId!=null) {
+
             // Query Firestore to get posts created by the current user
-            firestore.collection("comments")
-                .whereEqualTo("postId", postId)
+            val postRef= firestore.collection("posts").document(postId)
+                postRef.collection("comments")
+
                 .get()
                 .addOnSuccessListener { documents ->
                     val comments = mutableListOf<Comment>()
@@ -155,27 +157,34 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                                 "timestamp" to timestamp
 
                             )
-                            firestore.collection("comments")
-                                .add(commentData)
-                                .addOnSuccessListener {
-                                    Toast.makeText(
-                                        this@CommunityPostDetailActivity,
-                                        "Comment posted successfuuly",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    startActivity(Intent(this, CommunityPostDetailActivity::class.java).apply {
-                                        putExtra("postId", postId)
-                                    })
 
-                                }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(
-                                        this@CommunityPostDetailActivity,
-                                        "Failed to post comment:${e.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                        }
+                            if (postId!=null) {
+                                val postRef = firestore.collection("posts").document(postId)
+                                postRef.collection("comments")
+                                    .add(commentData)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            this@CommunityPostDetailActivity,
+                                            "Comment posted successfuuly",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        startActivity(
+                                            Intent(
+                                                this,
+                                                CommunityPostDetailActivity::class.java
+                                            ).apply {
+                                                putExtra("postId", postId)
+                                            })
+
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(
+                                            this@CommunityPostDetailActivity,
+                                            "Failed to post comment:${e.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            } }
                     }
 
                 }
