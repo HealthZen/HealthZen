@@ -16,6 +16,9 @@
         android:theme="@style/Theme.HealthZenSignUpLogIn"
         tools:targetApi="31">
         <activity
+            android:name=".FavoritesActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.meditation.SplashMeditationActivity"
             android:exported="false" />
         <activity
