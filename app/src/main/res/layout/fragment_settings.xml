@@ -42,14 +42,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-          android:layout_marginTop="20dp"
+          android:layout_marginTop="7dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/CommunityButton"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
                 android:text="Community"
                 android:textColor="@color/white"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="Explore the latest updates from community"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
@@ -77,12 +77,12 @@
             android:layout_height="wrap_content"
 
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/AddPostButton"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
                 android:text="AddPost"
                 android:textColor="@color/white"
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="Share thoughts and updates with community"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
@@ -106,12 +106,12 @@
             android:layout_height="wrap_content"
 
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/MyPostsButton"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
                 android:text="MyPosts"
                 android:textColor="@color/white"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="View and manage my own posts"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
@@ -135,12 +135,12 @@
             android:layout_height="wrap_content"
 
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/favoritesButton"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
                 android:text="My Favorites"
                 android:textColor="@color/white"
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="Stay informed with the latest notifications"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
@@ -161,14 +161,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/NotificationButton"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
                 android:text="Notification"
                 android:textColor="@color/white"
@@ -180,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:text="Stay informed with the latest notifications"
                 android:textColor="@color/brown"
                 android:textSize="15sp" />
