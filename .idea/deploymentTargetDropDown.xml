@@ -3,25 +3,7 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\XSJ\.android\avd\Pixel_6_Pro_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-<<<<<<< HEAD
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-18T09:33:49.350800100Z" />
-=======
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-18T09:55:40.362447500Z" />
->>>>>>> likepost
-        </State>
+        <State />
       </entry>
     </value>
   </component>
