@@ -50,6 +50,7 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
                         val poster = document.getString("poster") ?: ""
                         val postId = document.id // Use Firestore document id as postId
                         val timestamp = document.getTimestamp("timestamp")
+
                       val timestampString = timestamp?.toDate()?.toString() ?: ""
                         posts.add(MyPostDataClass(postTitle, postContent, poster,postId, timestampString))
                     }
