@@ -44,7 +44,8 @@ class SignUpActivity : AppCompatActivity() {
             val password = signupPassword.text.toString().trim()
 
             if (name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this@SignUpActivity, "All fields are required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SignUpActivity, "All fields are required", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -62,13 +63,57 @@ class SignUpActivity : AppCompatActivity() {
                     firestore.collection("users").document(userId)
                         .set(user)
                         .addOnSuccessListener {
-                            Toast.makeText(this@SignUpActivity, "SignUp Successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
+                            val userDocRef = firestore.collection("users").document(userId)
+                            userDocRef.collection("liked_posts").document("init")
+                                .set(hashMapOf("init" to true)) // Add a dummy document to trigger the success callback
+                                .addOnSuccessListener {
+                                    // Remove the dummy document
+                                    userDocRef.collection("liked_posts").document("init").delete()
+                                        .addOnSuccessListener {
+                                            Log.d(
+                                                TAG,
+                                                "Liked posts subcollection created for user $userId"
+                                            )
+                                            Toast.makeText(
+                                                this@SignUpActivity,
+                                                "SignUp Successful",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            startActivity(
+                                                Intent(
+                                                    this@SignUpActivity,
+                                                    LogInActivity::class.java
+                                                )
+                                            )
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            // Handle any errors
+                                            Log.e(TAG, "Error deleting dummy document: $exception")
+                                            Toast.makeText(
+                                                this@SignUpActivity,
+                                                "Error deleting dummy document",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                                .addOnFailureListener { exception ->
+                                    // Handle any errors
+                                    Log.e(
+                                        TAG,
+                                        "Error creating liked_posts subcollection: $exception"
+                                    )
+                                    Toast.makeText(
+                                        this@SignUpActivity,
+                                        "Error creating liked_posts subcollection",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                         }
                         .addOnFailureListener { e ->
                             val errorMessage = "Failed to save user data: ${e.message}"
                             Log.e(TAG, errorMessage)
-                            Toast.makeText(this@SignUpActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SignUpActivity, errorMessage, Toast.LENGTH_SHORT)
+                                .show()
                         }
                 } else {
                     val errorMessage = "SignUp Failed: ${task.exception?.message}"
@@ -77,7 +122,6 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         }
-
         loginRedirectText.setOnClickListener {
             startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
         }

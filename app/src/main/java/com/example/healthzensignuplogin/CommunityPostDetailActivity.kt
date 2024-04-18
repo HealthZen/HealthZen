@@ -1,7 +1,9 @@
 package com.example.healthzensignuplogin
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,13 +27,16 @@ class CommunityPostDetailActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var favoriteBtn:Button
-    var isLiked = false
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private var isLiked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_post_detail)
         buttonPostComment = findViewById(R.id.buttonPostComment)
         commentEditText = findViewById(R.id.commentEditText)
-        favoriteBtn=findViewById(R.id.favoriteBtn)
+        favoriteBtn = findViewById(R.id.favoriteBtn)
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -54,7 +59,6 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         //display comment based on postid
 
 
-
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         if (userId != null) {
@@ -65,7 +69,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener { documents ->
                     val comments = mutableListOf<Comment>()
                     for (document in documents) {
-                        val commentId=document.id
+                        val commentId = document.id
                         val commentAuthor = document.getString("commentAuthor") ?: ""
                         val commentContent = document.getString("commentContent") ?: ""
                         val commentAuthorId = document.getString("commentAuthorId") ?: ""
@@ -73,7 +77,16 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
-                        comments.add(Comment( commentAuthorId,commentContent, timestampString,commentId,postId,commentAuthor))
+                        comments.add(
+                            Comment(
+                                commentAuthorId,
+                                commentContent,
+                                timestampString,
+                                commentId,
+                                postId,
+                                commentAuthor
+                            )
+                        )
                     }
                     commentAdapter = CommentAdapter(comments)
                     recyclerView.adapter = commentAdapter
@@ -88,22 +101,33 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         }
 
 
+        //like post
 
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("liked_posts", Context.MODE_PRIVATE)
         val userid = userId ?: ""
         val postid = postId ?: ""
-      // Initialize isLiked variable as false
+        // Initialize isLiked variable as false
 
+         isLiked = sharedPreferences.getBoolean(postId, false)
+
+        setFavoriteButtonDrawable()
         favoriteBtn.setOnClickListener {
             // Toggle the liked status when the button is clicked
             isLiked = !isLiked // Toggle the value of isLiked
 
             if (isLiked) {
                 // If the post is not yet liked, add the like
-                checkLikedPostsSubcollectionExists(userid, postid)
+                addLikedPost(userid, postid)
             } else {
                 // If the post is already liked, remove the like
                 removeLikedPost(userid, postid)
             }
+
+            setFavoriteButtonDrawable()
+
+            // Update the SharedPreferences with the latest liked state
+            sharedPreferences.edit().putBoolean(postId, isLiked).apply()
         }
 
 
@@ -161,37 +185,15 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
     }
 
-    // Function to check if the liked_posts subcollection exists for a user
-    fun checkLikedPostsSubcollectionExists(userId: String, postId: String) {
-        val userDocRef = firestore.collection("users").document(userId)
-        userDocRef.collection("liked_posts").document(postId).get() // Check if the specific post document exists
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    // Post document exists, so the post has already been liked
-                    favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0)
-                } else {
-                    // Post document doesn't exist, indicating the post hasn't been liked yet
-                    createUserLikedPostsSubcollection(userId, postId)
-                }
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors
-                Log.e(TAG, "Error checking liked_posts subcollection: $exception")
-            }
+    private fun setFavoriteButtonDrawable() {
+        if (isLiked) {
+            favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0) // Set favorite button to red icon
+        } else {
+            favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.black_heart_icon, 0, 0) // Set favorite button to black icon
+        }
     }
 
-    private fun createUserLikedPostsSubcollection(userId: String, postId: String) {
-        val userDocRef = firestore.collection("users").document(userId)
-        userDocRef.collection("liked_posts").document(postId).set(emptyMap<String, Any>()) // Specify the type explicitly
-            .addOnSuccessListener {
-                Log.d(TAG, "Liked posts subcollection created for user $userId")
-                addLikedPost(userId, postId)
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors
-                Log.e(TAG, "Error creating liked_posts subcollection: $exception")
-            }
-    }
+    // Function to check if the liked_posts subcollection exists for a user
 
     fun addLikedPost(userId: String, postId: String) {
         val userDocRef = firestore.collection("users").document(userId)
@@ -206,8 +208,8 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         likedPostsCollectionRef.document(postId)
             .set(likedPostData)
             .addOnSuccessListener {
-                favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0) // Set favorite button to red icon
-                isLiked = true
+                isLiked=true
+                setFavoriteButtonDrawable()
                 Toast.makeText(
                     this@CommunityPostDetailActivity,
                     "Liked post added successfully for user",
@@ -215,7 +217,9 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                 ).show()
             }
             .addOnFailureListener { exception ->
-
+                isLiked = false
+                // Update the drawable of favoriteBtn based on the new value of isLiked
+                setFavoriteButtonDrawable()
                 Toast.makeText(
                     this@CommunityPostDetailActivity,
                     "Error adding liked post for user $userId: $exception",
@@ -233,7 +237,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         likedPostsCollectionRef.document(postId)
             .delete()
             .addOnSuccessListener {
-                favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.black_heart_icon, 0, 0) // Set favorite button to red icon
+               setFavoriteButtonDrawable()
                 isLiked = false
                 Toast.makeText(
                     this@CommunityPostDetailActivity,
@@ -242,7 +246,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                 ).show()
             }
             .addOnFailureListener { exception ->
-
+                isLiked = true
                 Toast.makeText(
                     this@CommunityPostDetailActivity,
                     "Error adding liked post for user $userId: $exception",
