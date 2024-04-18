@@ -99,7 +99,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
             if (isLiked) {
                 // If the post is not yet liked, add the like
-                checkLikedPostsSubcollectionExists(userid, postid)
+                addLikedPost(userid, postid)
             } else {
                 // If the post is already liked, remove the like
                 removeLikedPost(userid, postid)
@@ -162,36 +162,6 @@ class CommunityPostDetailActivity : AppCompatActivity() {
     }
 
     // Function to check if the liked_posts subcollection exists for a user
-    fun checkLikedPostsSubcollectionExists(userId: String, postId: String) {
-        val userDocRef = firestore.collection("users").document(userId)
-        userDocRef.collection("liked_posts").document(postId).get() // Check if the specific post document exists
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    // Post document exists, so the post has already been liked
-                    favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0)
-                } else {
-                    // Post document doesn't exist, indicating the post hasn't been liked yet
-                    createUserLikedPostsSubcollection(userId, postId)
-                }
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors
-                Log.e(TAG, "Error checking liked_posts subcollection: $exception")
-            }
-    }
-
-    private fun createUserLikedPostsSubcollection(userId: String, postId: String) {
-        val userDocRef = firestore.collection("users").document(userId)
-        userDocRef.collection("liked_posts").document(postId).set(emptyMap<String, Any>()) // Specify the type explicitly
-            .addOnSuccessListener {
-                Log.d(TAG, "Liked posts subcollection created for user $userId")
-                addLikedPost(userId, postId)
-            }
-            .addOnFailureListener { exception ->
-                // Handle any errors
-                Log.e(TAG, "Error creating liked_posts subcollection: $exception")
-            }
-    }
 
     fun addLikedPost(userId: String, postId: String) {
         val userDocRef = firestore.collection("users").document(userId)
