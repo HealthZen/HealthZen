@@ -4,24 +4,31 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.example.healthzensignuplogin.CalendarActivity
+import com.bumptech.glide.Glide
 import com.example.healthzensignuplogin.LogInActivity
 import com.example.healthzensignuplogin.MyPostsActivity
-
-import com.example.healthzensignuplogin.NewsActivity
 import com.example.healthzensignuplogin.R
 import com.example.healthzensignuplogin.SignUpActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.util.UUID
 
 class ProfileFragment : Fragment() {
 
@@ -38,11 +45,22 @@ class ProfileFragment : Fragment() {
     private lateinit var editButton: Button
     private lateinit var postsNumber:TextView
 
+    private lateinit var profilePic: ImageView
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
+    private lateinit var getContent: ActivityResultLauncher<String>
+    private lateinit var progressBar: ProgressBar
+
+
     // Add variables to store user data
     private var nameUser: String? = null
     private var emailUser: String? = null
     private var usernameUser: String? = null
     private var passwordUser: String? = null
+
+    private var imageUri: Uri = Uri.EMPTY
+    private var profilePicUrlUser: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,13 +73,26 @@ class ProfileFragment : Fragment() {
         editButton=view.findViewById(R.id.editButton)
         postsNumber=view.findViewById(R.id.postsNumber)
 
+        profilePic =view.findViewById(R.id.profileImg)
+
+        progressBar = view.findViewById(R.id.progressBar)
+
+
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.getReference()
+
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
 
-
-
-
+        getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null) {
+                // Handle the selected image URI here
+                imageUri = uri
+                profilePic.setImageURI(imageUri)
+                uploadPicture()
+            }
+        }
         return view
     }
 
@@ -79,9 +110,11 @@ class ProfileFragment : Fragment() {
         val email = sharedPref.getString("email", "")
         val username = sharedPref.getString("username", "")
         val password = sharedPref.getString("password", "")
+        val profilePicUrl = sharedPref.getString("profilePicUrl", "")
+
 
         // Set user data to TextViews
-        setUserData(name, email, username, password)
+        setUserData(name, email, username, password, profilePicUrl)
 
         logoutButton.setOnClickListener {
             // Build an AlertDialog to confirm logout
@@ -148,10 +181,72 @@ class ProfileFragment : Fragment() {
             dialog.show()
 
         }
-
-
-
+        profilePic.setOnClickListener {
+            choosePicture()
+        }
     }
+
+    private fun choosePicture() {
+        getContent.launch("image/*")
+    }
+
+    private fun uploadPicture() {
+        if (imageUri == Uri.EMPTY) { // Check if imageUri is empty
+            Toast.makeText(requireContext(), "No image selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        progressBar.visibility = View.VISIBLE
+
+        val randomKey = UUID.randomUUID().toString()
+        val imagesRef = storageReference.child("images/$randomKey")
+
+        imagesRef.putFile(imageUri!!)
+            .addOnSuccessListener { taskSnapshot ->
+                progressBar.visibility = View.GONE
+                view?.let { rootView ->
+                    Snackbar.make(rootView, "Image Uploaded", Snackbar.LENGTH_LONG).show()
+                }
+                imagesRef.downloadUrl.addOnSuccessListener { uri ->
+                    saveImageUrlToFirestore(uri.toString())
+                }
+            }
+            .addOnFailureListener { exception ->
+                progressBar.visibility = View.GONE
+                Toast.makeText(requireContext(), "Failed to Upload: ${exception.message}", Toast.LENGTH_LONG).show()
+            }
+            .addOnProgressListener { taskSnapshot ->
+                val progressPercent = (100.00 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
+                updateProgress(progressPercent)
+            }
+    }
+
+    private fun saveImageUrlToSharedPreferences(imageUrl: String) {
+        val sharedPref = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("profilePicUrl", imageUrl)
+        editor.apply()
+    }
+
+    private fun saveImageUrlToFirestore(imageUrl: String) {
+        val currentUser = auth.currentUser
+        currentUser?.let { user ->
+            val userId = user.uid
+            val userRef = firestore.collection("users").document(userId)
+            userRef.update("profilePicUrl", imageUrl)
+                .addOnSuccessListener {
+                    // Profile picture URL saved successfully
+                }
+                .addOnFailureListener { e ->
+                    // Failed to save profile picture URL
+                }
+        }
+        saveImageUrlToSharedPreferences(imageUrl)
+    }
+    private fun updateProgress(progressPercent: Int) {
+        progressBar.progress = progressPercent
+    }
+
 
     //change username
     private fun changeUserName(newName:EditText) {
@@ -175,7 +270,7 @@ class ProfileFragment : Fragment() {
                             "Changed username successfully",
                             Toast.LENGTH_SHORT
                         ).show()
-                        setUserData(nameUser, emailUser, newusername, passwordUser)
+                        setUserData(nameUser, emailUser, newusername, passwordUser, profilePicUrlUser)
 
                     }
                     .addOnFailureListener { e ->
@@ -244,12 +339,14 @@ class ProfileFragment : Fragment() {
     }
 
 
+
     // Function to set user data
-    fun setUserData(name: String?, email: String?, username: String?, password: String?) {
+    private fun setUserData(name: String?, email: String?, username: String?, password: String?, profilePicUrl: String?) {
         nameUser = name
         emailUser = email
         usernameUser = username
         passwordUser = password
+        profilePicUrlUser = profilePicUrl
 
         // Update UI with user data
         showUserData()
@@ -260,7 +357,8 @@ class ProfileFragment : Fragment() {
         // Check if TextViews are initialized
         if (::titleName.isInitialized && ::titleUsername.isInitialized &&
             ::profileName.isInitialized && ::profileEmail.isInitialized &&
-            ::profileUsername.isInitialized && ::profilePassword.isInitialized) {
+            ::profileUsername.isInitialized && ::profilePassword.isInitialized&&
+            ::profilePic.isInitialized) {
             // Set user data to TextViews
             titleName.text = nameUser
             titleUsername.text = usernameUser
@@ -268,6 +366,18 @@ class ProfileFragment : Fragment() {
             profileEmail.text = emailUser
             profileUsername.text = usernameUser
             profilePassword.text = "********"
+            // Retrieve profile picture URL from SharedPreferences
+            val sharedPref = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
+            val profilePicUrl = sharedPref.getString("profilePicUrl", "")
+
+            // Load profile picture if URL is not empty
+            if (!profilePicUrl.isNullOrEmpty()) {
+                Glide.with(this)
+                    .load(profilePicUrl)
+                    .into(profilePic)
+            } else {
+                profilePic.setImageResource(R.drawable.photologo)
+            }
         }
     }
 }

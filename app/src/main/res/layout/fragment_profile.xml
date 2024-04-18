@@ -7,6 +7,14 @@
     android:background="@drawable/profilebkg"
     tools:context="com.example.ProfileFragment">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:id="@+id/profileImg"
         android:layout_width="80dp"
