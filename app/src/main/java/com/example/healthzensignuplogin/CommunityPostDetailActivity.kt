@@ -54,6 +54,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textViewPostContent).text = posts?.postcontent
             findViewById<TextView>(R.id.textViewPoster).text = posts?.poster
             findViewById<TextView>(R.id.postDate).text = posts?.date
+            findViewById<TextView>(R.id.postDate).text = posts?.date
         }
 
         //display comment based on postid
@@ -163,7 +164,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                                 postRef.collection("comments")
                                     .add(commentData)
                                     .addOnSuccessListener { documentReference ->
-                                        val replyCollectionRef = documentReference.collection("replies")
+//                                        val replyCollectionRef = documentReference.collection("replies")
                                         Toast.makeText(
                                             this@CommunityPostDetailActivity,
                                             "Comment posted successfuuly",

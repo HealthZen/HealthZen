@@ -21,9 +21,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
-
-class CommentAdapter(private val commentList: MutableList<Comment>) :
-    RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class RepliedCommentAdapter(private val commentList: MutableList<Comment>) :
+    RecyclerView.Adapter<RepliedCommentAdapter.ViewHolder>() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
@@ -75,8 +74,8 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         }
 
 
-      firebaseAuth = FirebaseAuth.getInstance()
-      firestore = FirebaseFirestore.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
 
         holder.submitReplyButton.setOnClickListener {
@@ -98,10 +97,9 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
                                 "repliedAuthor" to repliedAuthor,
                                 "repliedAuthorId" to userId,
                                 "postId" to  currentItem.postId,
-                                "parentcommentId" to currentItem.commentId,
                                 "timestamp" to timestamp,
 
-                            )
+                                )
 
                             if (currentItem.postId != null) {
                                 val replyCollectionRef= firestore.collection("comments").document(currentItem.commentId)
@@ -126,7 +124,7 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
                     }
                 }
 
-                    // Clear reply input field
+                // Clear reply input field
                 holder.replyInputField.text.clear()
             } else {
                 // Show error or prompt user to enter reply content
