@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -26,6 +29,10 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         val commentDate: TextView = itemView.findViewById(R.id.commentDate)
         val commentAuthor: TextView = itemView.findViewById(R.id.commentAuthor)
         val deleteCommentButton: Button = itemView.findViewById(R.id.deleteCommentButton)
+        val replyCommentImage: ImageView = itemView.findViewById(R.id.replycommentimage)
+        val replyBoxLayout: LinearLayout = itemView.findViewById(R.id.replyBoxLayout)
+        val replyInputField: EditText = itemView.findViewById(R.id.replyInputField)
+        val submitReplyButton: Button = itemView.findViewById(R.id.submitReplyButton)
 
         // Function to get the context from the item view
         fun getContext(): Context {
@@ -74,7 +81,24 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
                     }
 
                 }
+
+
         }
+        // Set onClickListener on the chat image view
+        holder.replyCommentImage.setOnClickListener {
+            // Toggle the visibility of the reply box
+            if (holder.replyBoxLayout.visibility == View.VISIBLE) {
+                holder.replyBoxLayout.visibility = View.GONE
+            } else {
+                holder.replyBoxLayout.visibility = View.VISIBLE
+            }
+        }
+
+        // Set onClickListener for submitting reply
+        holder.submitReplyButton.setOnClickListener {
+            // Implement reply submission logic here
+        }
+
     }
 
     override fun getItemCount() = commentList.size
