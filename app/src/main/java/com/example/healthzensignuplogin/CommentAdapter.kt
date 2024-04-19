@@ -31,8 +31,6 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
-
         val commentContent: TextView = itemView.findViewById(R.id.commentContent)
         val commentDate: TextView = itemView.findViewById(R.id.commentDate)
         val commentAuthor: TextView = itemView.findViewById(R.id.commentAuthor)
@@ -65,6 +63,29 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         holder.commentDate.text = currentItem.date
         holder.commentAuthor.text = currentItem.author
 
+        if (currentItem.repliedComments.isNotEmpty()){
+            for (repliedComment in currentItem.repliedComments){
+                val repliedCommentView=LayoutInflater.from(context).inflate(
+                    R.layout.replied_comment_item,
+                    holder.replyBoxLayout,
+                    false
+                )
+
+                val repliedAuthorTextView = repliedCommentView.findViewById<TextView>(R.id.repliedAuthorTextView)
+                val repliedContentTextView = repliedCommentView.findViewById<TextView>(R.id.repliedContentTextView)
+                val repliedTimestampTextView = repliedCommentView.findViewById<TextView>(R.id.repliedTimestampTextView)
+
+                repliedAuthorTextView.text = repliedComment.author
+                repliedContentTextView.text = repliedComment.content
+                repliedTimestampTextView.text = repliedComment.date
+
+                holder.replyBoxLayout.addView(repliedCommentView)
+            }
+        }
+
+
+
+
         // Set the click listener for the delete button
         holder.deleteCommentview.setOnClickListener {
             showDeleteConfirmationDialog(
@@ -77,7 +98,6 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
 
       firebaseAuth = FirebaseAuth.getInstance()
       firestore = FirebaseFirestore.getInstance()
-
 
         holder.submitReplyButton.setOnClickListener {
             val replyContent = holder.replyInputField.text.toString()
@@ -104,7 +124,10 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
                             )
 
                             if (currentItem.postId != null) {
-                                val replyCollectionRef= firestore.collection("comments").document(currentItem.commentId)
+
+                                val postRef = firestore.collection("posts").document(currentItem.postId)
+                                val replyCollectionRef= postRef.collection("comments").document(currentItem.commentId)
+
                                 replyCollectionRef.collection("replies")
                                     .add(repliedCommentData)
                                     .addOnSuccessListener { documentReference ->

@@ -6,5 +6,6 @@ data class Comment(
     val date: String,
     val commentId: String,
     val postId:String,
-    val author: String
+    val author: String,
+    val repliedComments: List<RepliedComment>
 )

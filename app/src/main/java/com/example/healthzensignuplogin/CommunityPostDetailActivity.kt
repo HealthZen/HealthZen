@@ -60,13 +60,17 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         //display comment based on postid
 
 
+        //retrieve comments
+
+        firestore = FirebaseFirestore.getInstance()
+
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         if (userId != null&&postId!=null) {
 
             // Query Firestore to get posts created by the current user
             val postRef= firestore.collection("posts").document(postId)
-                postRef.collection("comments")
+            postRef.collection("comments")
 
                 .get()
                 .addOnSuccessListener { documents ->
@@ -80,19 +84,53 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
-                        comments.add(
-                            Comment(
-                                commentAuthorId,
-                                commentContent,
-                                timestampString,
-                                commentId,
-                                postId,
-                                commentAuthor
-                            )
-                        )
+
+
+                        val repliedComments= mutableListOf<RepliedComment>()
+                        document.reference.collection("replies")
+                            .get()
+                            .addOnSuccessListener { repliedDocuments->
+                                for (repliedDocument in repliedDocuments){
+                                    val repliedAuthor = repliedDocument.getString("repliedAuthor") ?: ""
+                                    val repliedContent = repliedDocument.getString("repliedContent") ?: ""
+                                    val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
+                                    val repliedTimestamp = repliedDocument.getTimestamp("timestamp")
+                                    val repliedTimestampString = repliedTimestamp?.toDate()?.toString() ?: ""
+
+                                    val repliedComment=RepliedComment(
+                                        repliedAuthor,
+                                        repliedContent,
+                                        repliedAuthorId,
+                                        repliedTimestampString
+                                    )
+                                    repliedComments.add(repliedComment)
+                                }
+
+
+                                val comment = Comment(
+                                    commentAuthorId,
+                                    commentContent,
+                                    timestampString,
+                                    commentId,
+                                    postId,
+                                    commentAuthor,
+                                    repliedComments
+                                )
+                                comments.add(comment)
+
+                                // Notify adapter only after adding the comment
+                                if (comments.size == documents.size()) {
+                                    commentAdapter = CommentAdapter(comments)
+                                    recyclerView.adapter = commentAdapter
+                                    commentAdapter.notifyDataSetChanged()
+                                }
+                            }
+
+                            .addOnFailureListener { e ->
+                                Log.e("", "failed to fetch replied comments: ${e.message}\", e")
+                            }
                     }
-                    commentAdapter = CommentAdapter(comments)
-                    recyclerView.adapter = commentAdapter
+
                 }
                 .addOnFailureListener { exception ->
                     // Handle errors

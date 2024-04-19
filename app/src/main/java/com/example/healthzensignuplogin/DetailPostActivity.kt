@@ -2,6 +2,7 @@ package com.example.healthzensignuplogin
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
@@ -127,15 +128,17 @@ class DetailPostActivity : AppCompatActivity() {
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        if (userId != null) {
+        if (userId != null&&postId!=null) {
+
             // Query Firestore to get posts created by the current user
-            firestore.collection("comments")
-                .whereEqualTo("postId", postId)
+            val postRef= firestore.collection("posts").document(postId)
+            postRef.collection("comments")
+
                 .get()
                 .addOnSuccessListener { documents ->
                     val comments = mutableListOf<Comment>()
                     for (document in documents) {
-                        val commentId=document.id
+                        val commentId = document.id
                         val commentAuthor = document.getString("commentAuthor") ?: ""
                         val commentContent = document.getString("commentContent") ?: ""
                         val commentAuthorId = document.getString("commentAuthorId") ?: ""
@@ -143,7 +146,46 @@ class DetailPostActivity : AppCompatActivity() {
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
-                        comments.add(Comment( commentAuthorId,commentContent, timestampString,commentId,postId,commentAuthor))
+
+
+                        val repliedComments= mutableListOf<RepliedComment>()
+                        document.reference.collection("replies")
+                            .get()
+                            .addOnSuccessListener { repliedDocuments->
+                                for (repliedDocument in repliedDocuments){
+                                    val repliedAuthor = repliedDocument.getString("repliedAuthor") ?: ""
+                                    val repliedContent = repliedDocument.getString("repliedContent") ?: ""
+                                    val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
+                                    val repliedTimestamp = repliedDocument.getTimestamp("timestamp")
+                                    val repliedTimestampString = repliedTimestamp?.toDate()?.toString() ?: ""
+
+                                    val repliedComment=RepliedComment(
+                                        repliedAuthor,
+                                        repliedContent,
+                                        repliedAuthorId,
+                                        repliedTimestampString
+                                    )
+                                    repliedComments.add(repliedComment)
+                                }
+
+
+                                val comment = Comment(
+                                    commentAuthorId,
+                                    commentContent,
+                                    timestampString,
+                                    commentId,
+                                    postId,
+                                    commentAuthor,
+                                    repliedComments
+                                )
+                                comments.add(comment)
+
+                                // Notify adapter only after adding the comment
+                                commentAdapter.notifyDataSetChanged()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("", "failed to fetch replied comments: ${e.message}\", e")
+                            }
                     }
                     commentAdapter = CommentAdapter(comments)
                     recyclerView.adapter = commentAdapter
@@ -156,7 +198,6 @@ class DetailPostActivity : AppCompatActivity() {
             // User is not authenticated
             // Handle this case accordingly (e.g., redirect to login)
         }
-
 
     }
 
