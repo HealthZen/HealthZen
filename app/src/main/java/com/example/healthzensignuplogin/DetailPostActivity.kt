@@ -63,7 +63,8 @@ class DetailPostActivity : AppCompatActivity() {
                         .delete()
                         .addOnSuccessListener {
 
-                            db.collection("comments")
+                            val commentRef= db.collection("posts").document(postId)
+                            commentRef.collection("comments")
                                 .whereEqualTo("postId", postId)
                                 .get()
                                 .addOnSuccessListener { querySnapshot ->
