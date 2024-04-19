@@ -162,7 +162,8 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                                 val postRef = firestore.collection("posts").document(postId)
                                 postRef.collection("comments")
                                     .add(commentData)
-                                    .addOnSuccessListener {
+                                    .addOnSuccessListener { documentReference ->
+                                        val replyCollectionRef = documentReference.collection("replies")
                                         Toast.makeText(
                                             this@CommunityPostDetailActivity,
                                             "Comment posted successfuuly",
