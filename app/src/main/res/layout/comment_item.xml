@@ -65,15 +65,25 @@
 
                 >
 
-            <Button
-                android:id="@+id/deleteCommentButton"
-                android:layout_width="91dp"
-                android:layout_height="40dp"
+                <ImageView
+                    android:id="@+id/deleteCommentview"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/baseline_delete_outline_24"
+                    tools:ignore="ContentDescription" />
+<!--            <Button-->
+<!--                android:id="@+id/deleteCommentButton"-->
+<!--                android:layout_width="91dp"-->
+<!--                android:layout_height="40dp"-->
 
-                android:backgroundTint="@color/lightgreen"
-                android:text="Delete"
-                android:textSize="15sp"
-                />
+<!--                android:backgroundTint="@color/lightgreen"-->
+<!--                android:text="Delete"-->
+<!--                android:textSize="15sp"-->
+<!--                />-->
+
 
                 <ImageView
                     android:id="@+id/replycommentimage"

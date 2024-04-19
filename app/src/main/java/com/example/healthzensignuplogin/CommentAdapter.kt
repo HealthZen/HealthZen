@@ -28,11 +28,12 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         val commentContent: TextView = itemView.findViewById(R.id.commentContent)
         val commentDate: TextView = itemView.findViewById(R.id.commentDate)
         val commentAuthor: TextView = itemView.findViewById(R.id.commentAuthor)
-        val deleteCommentButton: Button = itemView.findViewById(R.id.deleteCommentButton)
+
         val replyCommentImage: ImageView = itemView.findViewById(R.id.replycommentimage)
         val replyBoxLayout: LinearLayout = itemView.findViewById(R.id.replyBoxLayout)
         val replyInputField: EditText = itemView.findViewById(R.id.replyInputField)
         val submitReplyButton: Button = itemView.findViewById(R.id.submitReplyButton)
+        val deleteCommentview: ImageView = itemView.findViewById(R.id.deleteCommentview)
 
         // Function to get the context from the item view
         fun getContext(): Context {
@@ -53,7 +54,7 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         holder.commentAuthor.text = currentItem.author
 
         // Set the click listener for the delete button
-        holder.deleteCommentButton.setOnClickListener {
+        holder.deleteCommentview.setOnClickListener {
             showDeleteConfirmationDialog(
                 holder.getContext(),
                 currentItem.commentId,
@@ -73,10 +74,10 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
                     if (document != null && document.exists()) {
                         val commentPostAuthorId = document.getString("userId") ?: ""
                         if (userId ==commentAuthorId || userId == commentPostAuthorId) {
-                            holder.deleteCommentButton.visibility = View.VISIBLE
+                            holder.deleteCommentview.visibility = View.VISIBLE
 
                         } else {
-                            holder.deleteCommentButton.visibility = View.INVISIBLE
+                            holder.deleteCommentview.visibility = View.INVISIBLE
                         }
                     }
 
