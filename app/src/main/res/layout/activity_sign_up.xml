@@ -24,7 +24,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Empowering Providers, Supporting Lives"
+        android:text="Empowering Healthcare Professionals "
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/brown"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="for a Healthier Workforce"
         android:textSize="16sp"
         android:textAlignment="center"
         android:textStyle="bold"
