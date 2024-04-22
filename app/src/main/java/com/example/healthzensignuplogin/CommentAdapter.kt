@@ -25,13 +25,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class CommentAdapter(
     private val commentList: MutableList<Comment>,
-    private val repliesMap:Map<String,List<RepliedComment>>) :
-    RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+    private val repliesMap: MutableMap<String, MutableList<RepliedComment>>,
 
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var firebaseAuth: FirebaseAuth
+) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+    private lateinit var  firestore: FirebaseFirestore
+    private lateinit var  firebaseAuth: FirebaseAuth
+
     private lateinit var context: Context
 private lateinit var repliedRecyclerView:RecyclerView
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -91,7 +93,7 @@ private lateinit var repliedRecyclerView:RecyclerView
 
 
       firebaseAuth = FirebaseAuth.getInstance()
-      firestore = FirebaseFirestore.getInstance()
+   firestore = FirebaseFirestore.getInstance()
 
 
         //handle submit reply
@@ -132,6 +134,18 @@ private lateinit var repliedRecyclerView:RecyclerView
                                             "replied successfully",
                                             Toast.LENGTH_SHORT
                                         ).show()
+                                        // Add the new reply to the adapter and notify the change
+                                        val newReply = RepliedComment(
+                                            repliedAuthor = repliedAuthor.toString(),
+                                            repliedContent = replyContent,
+                                            repliedAuthorId = userId,
+                                            repliedDate = timestamp.toString(),
+                                            parentCommentId = currentItem.commentId,
+                                            postId = currentItem.postId
+                                        )
+                                        addReply(currentItem.commentId, newReply)
+
+
                                     }
                                     .addOnFailureListener { e ->
                                         Toast.makeText(
@@ -194,6 +208,16 @@ private lateinit var repliedRecyclerView:RecyclerView
     }
 
     override fun getItemCount() = commentList.size
+
+    fun addReply(commentId: String, newReply: RepliedComment) {
+        val replies = repliesMap[commentId]
+        if (replies != null) {
+            replies.add(newReply)
+            // Notify the adapter about the data change
+            notifyDataSetChanged() // Or notifyItemChanged as per your requirement
+        }
+    }
+
 
 //    fun updateReplies(commentId: String, replies: List<RepliedComment>) {
 //        repliesMap[commentId] = replies

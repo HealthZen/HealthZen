@@ -75,7 +75,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { documents ->
                     val comments = mutableListOf<Comment>()
-                    val repliesMap = mutableMapOf<String, List<RepliedComment>>()
+                    val repliesMap = mutableMapOf<String, MutableList<RepliedComment>>()
                     for (document in documents) {
                         val commentId = document.id
                         val commentAuthor = document.getString("commentAuthor") ?: ""
@@ -95,6 +95,9 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                         )
 
 // Retrieve replies for this comment
+
+                        val replies = mutableListOf<RepliedComment>()
+
                         val repliesRef = postRef.collection("comments").document(commentId)
                             .collection("replies")
                         repliesRef.get()
