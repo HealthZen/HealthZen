@@ -128,7 +128,6 @@ class DetailPostActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
-
         if (userId != null && postId != null) {
             // Retrieve comments
             val postRef = firestore.collection("posts").document(postId)
@@ -136,39 +135,70 @@ class DetailPostActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { documents ->
                     val comments = mutableListOf<Comment>()
+                    val repliesMap = mutableMapOf<String, List<RepliedComment>>()
                     for (document in documents) {
                         val commentId = document.id
                         val commentAuthor = document.getString("commentAuthor") ?: ""
                         val commentContent = document.getString("commentContent") ?: ""
                         val commentAuthorId = document.getString("commentAuthorId") ?: ""
-                        val postId = document.getString("postId") ?: ""
                         val timestamp = document.getTimestamp("timestamp")
                         val timestampString = timestamp?.toDate()?.toString() ?: ""
 
+// Create the comment object
                         val comment = Comment(
                             commentAuthorId,
                             commentContent,
                             timestampString,
                             commentId,
                             postId,
-                            commentAuthor,
-                            mutableListOf() // No replied comments for now, leave it empty
+                            commentAuthor
                         )
-                        comments.add(comment)
-                    }
 
-                    // Notify adapter after retrieving comments
-                    commentAdapter = CommentAdapter(comments)
-                    recyclerView.adapter = commentAdapter
-                    commentAdapter.notifyDataSetChanged()
+// Retrieve replies for this comment
+                        val repliesRef = postRef.collection("comments").document(commentId)
+                            .collection("replies")
+                        repliesRef.get()
+                            .addOnSuccessListener { repliedDocuments ->
+                                val replies = mutableListOf<RepliedComment>()
+                                for (repliedDocument in repliedDocuments) {
+                                    // Retrieve replied comments data
+                                    val repliedAuthor = repliedDocument.getString("repliedAuthor") ?: ""
+                                    val repliedContent = repliedDocument.getString("repliedContent") ?: ""
+                                    val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
+                                    val repliedTimestamp = repliedDocument.getTimestamp("timestamp")
+                                    val repliedTimestampString = repliedTimestamp?.toDate()?.toString() ?: ""
+                                    val parentCommentId = repliedDocument.getString("parentCommentId") ?: ""
+                                    val postId = repliedDocument.getString("postId") ?: ""
+
+                                    // Create the replied comment object
+                                    val repliedComment = RepliedComment(
+                                        repliedAuthor = repliedAuthor,
+                                        repliedContent = repliedContent,
+                                        repliedAuthorId = repliedAuthorId,
+                                        repliedDate = repliedTimestampString,
+                                        parentCommentId = parentCommentId,
+                                        postId = postId
+                                    )
+                                    replies.add(repliedComment)
+                                }
+
+                                // Add replies to the map
+                                repliesMap[commentId] = replies
+                                // Add comment to the list
+                                comments.add(comment)
+
+                                // Notify adapter if necessary
+                                commentAdapter = CommentAdapter(comments, repliesMap)
+                                recyclerView.adapter = commentAdapter
+                                commentAdapter.notifyDataSetChanged()
+                            }
+                            .addOnFailureListener { exception ->
+                                // Handle errors
+                                exception.printStackTrace()
+                            }
+                    }
                 }
-                .addOnFailureListener { exception ->
-                    // Handle errors
-                    exception.printStackTrace()
-                }
-        } else {
-            // User is not authenticated
-            // Handle this case accordingly (e.g., redirect to login)
+
         }
 
     }

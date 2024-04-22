@@ -1,9 +1,11 @@
 package com.example.healthzensignuplogin
 
 data class RepliedComment(
-    val author: String, // Adding the author property
-    val content: String,
+    val repliedAuthor: String, // Adding the author property
+    val repliedContent: String,
     val repliedAuthorId: String,
-    val date: String
+    val repliedDate: String,
+    val parentCommentId:String,
+    val postId:String
 
 )

@@ -7,5 +7,5 @@ data class Comment(
     val commentId: String,
     val postId:String,
     val author: String,
-    val repliedComments: List<RepliedComment>
+
 )

@@ -16,18 +16,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class CommentAdapter(private val commentList: MutableList<Comment>) :
+class CommentAdapter(
+    private val commentList: MutableList<Comment>,
+    private val repliesMap:Map<String,List<RepliedComment>>) :
     RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var context: Context
+private lateinit var repliedRecyclerView:RecyclerView
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -41,6 +45,7 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         val submitReplyButton: Button = itemView.findViewById(R.id.submitReplyButton)
         val deleteCommentview: ImageView = itemView.findViewById(R.id.deleteCommentview)
 
+        val repliedRecyclerView: RecyclerView = itemView.findViewById(R.id.repliedRecyclerView)
 
 
 
@@ -63,28 +68,17 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         holder.commentDate.text = currentItem.date
         holder.commentAuthor.text = currentItem.author
 
-        if (currentItem.repliedComments.isNotEmpty()){
-            for (repliedComment in currentItem.repliedComments){
-                val repliedCommentView=LayoutInflater.from(context).inflate(
-                    R.layout.replied_comment_item,
-                    holder.replyBoxLayout,
-                    false
-                )
 
-                val repliedAuthorTextView = repliedCommentView.findViewById<TextView>(R.id.repliedAuthorTextView)
-                val repliedContentTextView = repliedCommentView.findViewById<TextView>(R.id.repliedContentTextView)
-                val repliedTimestampTextView = repliedCommentView.findViewById<TextView>(R.id.repliedTimestampTextView)
+        //display replies
 
-                repliedAuthorTextView.text = repliedComment.author
-                repliedContentTextView.text = repliedComment.content
-                repliedTimestampTextView.text = repliedComment.date
-
-                holder.replyBoxLayout.addView(repliedCommentView)
+        val replies=repliesMap[currentItem.commentId]
+        if (replies!=null) {
+            val replyAdapter = RepliedAdapter(replies)
+            holder.repliedRecyclerView.apply {
+                layoutManager = LinearLayoutManager(holder.getContext())
+                adapter = replyAdapter
             }
         }
-
-
-
 
         // Set the click listener for the delete button
         holder.deleteCommentview.setOnClickListener {
@@ -96,9 +90,12 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         }
 
 
+
+
       firebaseAuth = FirebaseAuth.getInstance()
       firestore = FirebaseFirestore.getInstance()
 
+        //handle submit reply
         holder.submitReplyButton.setOnClickListener {
             val replyContent = holder.replyInputField.text.toString()
             if (replyContent.isNotEmpty()) {
@@ -157,6 +154,8 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
         }
 
 
+
+        //set delete button visibility
         val commentAuthorId = currentItem.commentAuthorId
         val postId = currentItem.postId
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -196,6 +195,11 @@ class CommentAdapter(private val commentList: MutableList<Comment>) :
     }
 
     override fun getItemCount() = commentList.size
+
+//    fun updateReplies(commentId: String, replies: List<RepliedComment>) {
+//        repliesMap[commentId] = replies
+//        notifyDataSetChanged()
+//    }
 
     // Method to show the delete confirmation dialog
     private fun showDeleteConfirmationDialog(context: Context, commentId: String,postId: String) {
