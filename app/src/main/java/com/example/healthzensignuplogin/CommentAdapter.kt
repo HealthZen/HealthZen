@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.UUID
 
 
 class CommentAdapter(
@@ -109,6 +110,7 @@ private lateinit var repliedRecyclerView:RecyclerView
                         if (it != null) {
                             val repliedAuthor = it.data?.get("username")?.toString()
                             val timestamp = FieldValue.serverTimestamp()
+                            val replyId = UUID.randomUUID().toString()
 
                             val repliedCommentData = hashMapOf(
                                 "repliedContent" to replyContent,
@@ -117,6 +119,7 @@ private lateinit var repliedRecyclerView:RecyclerView
                                 "postId" to  currentItem.postId,
                                 "parentcommentId" to currentItem.commentId,
                                 "timestamp" to timestamp,
+                                "replyId" to replyId
 
                             )
 
@@ -125,9 +128,10 @@ private lateinit var repliedRecyclerView:RecyclerView
                                 val postRef = firestore.collection("posts").document(currentItem.postId)
                                 val replyCollectionRef= postRef.collection("comments").document(currentItem.commentId)
 
-                                replyCollectionRef.collection("replies")
-                                    .add(repliedCommentData)
+                                replyCollectionRef.collection("replies").document(replyId)
+                                    .set(repliedCommentData)
                                     .addOnSuccessListener { documentReference ->
+
                                         Toast.makeText(
                                             holder.itemView.context,
                                             "replied successfully",
@@ -140,7 +144,8 @@ private lateinit var repliedRecyclerView:RecyclerView
                                             repliedAuthorId = userId,
                                             repliedDate = timestamp.toString(),
                                             parentCommentId = currentItem.commentId,
-                                            postId = currentItem.postId
+                                            postId = currentItem.postId,
+                                            replyId=replyId
                                         )
                                         addReply(currentItem.commentId, newReply)
 

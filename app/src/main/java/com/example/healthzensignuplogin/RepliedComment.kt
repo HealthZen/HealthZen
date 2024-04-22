@@ -6,6 +6,7 @@ data class RepliedComment(
     val repliedAuthorId: String,
     val repliedDate: String,
     val parentCommentId:String,
-    val postId:String
+    val postId:String,
+    val replyId:String
 
 )

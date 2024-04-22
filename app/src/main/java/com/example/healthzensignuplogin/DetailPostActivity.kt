@@ -174,7 +174,9 @@ class DetailPostActivity : AppCompatActivity() {
                             .addOnSuccessListener { repliedDocuments ->
                                 val replies = mutableListOf<RepliedComment>()
                                 for (repliedDocument in repliedDocuments) {
+
                                     // Retrieve replied comments data
+                                    val replyId=repliedDocument.id
                                     val repliedAuthor = repliedDocument.getString("repliedAuthor") ?: ""
                                     val repliedContent = repliedDocument.getString("repliedContent") ?: ""
                                     val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
@@ -190,7 +192,8 @@ class DetailPostActivity : AppCompatActivity() {
                                         repliedAuthorId = repliedAuthorId,
                                         repliedDate = repliedTimestampString,
                                         parentCommentId = parentCommentId,
-                                        postId = postId
+                                        postId = postId,
+                                        replyId=replyId
                                     )
                                     replies.add(repliedComment)
                                 }
