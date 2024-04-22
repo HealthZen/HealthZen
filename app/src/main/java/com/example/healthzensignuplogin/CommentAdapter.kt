@@ -95,7 +95,6 @@ private lateinit var repliedRecyclerView:RecyclerView
       firebaseAuth = FirebaseAuth.getInstance()
    firestore = FirebaseFirestore.getInstance()
 
-
         //handle submit reply
         holder.submitReplyButton.setOnClickListener {
             val replyContent = holder.replyInputField.text.toString()
@@ -246,8 +245,8 @@ private lateinit var repliedRecyclerView:RecyclerView
         val db = FirebaseFirestore.getInstance()
         if (userId != null&&postId != null && commentId != null) {
             val postRef = firestore.collection("posts").document(postId)
-            postRef.collection("comments").document(commentId)
-                .delete()
+            val commentRef = postRef.collection("comments").document(commentId)
+            commentRef.delete()
                 .addOnSuccessListener {
                     // Remove the deleted comment from the commentList
                     val position =
@@ -255,11 +254,24 @@ private lateinit var repliedRecyclerView:RecyclerView
                     if (position != -1) {
                         commentList.removeAt(position)
                         notifyItemRemoved(position) // Notify the adapter that the item has been removed
-                        Toast.makeText(
-                            context,
-                            "Comment deleted successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val replyRef = commentRef.collection("replies")
+                        replyRef.get()
+                            .addOnSuccessListener { replySnapshot ->
+                                val batch = db.batch()
+                                for (replyDoc in replySnapshot.documents) {
+                                    batch.delete(replyDoc.reference)
+                                }
+                                batch.commit()
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            context,
+                                            "Comment deleted successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    .addOnFailureListener { /* Handle failure */ }
+                            }
+                            .addOnFailureListener { /* Handle failure */ }
                     } else {
                         Toast.makeText(
                             context,
@@ -268,17 +280,7 @@ private lateinit var repliedRecyclerView:RecyclerView
                         ).show()
                     }
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(
-                        context,
-                        "Failed to delete comment: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-        } else {
-            Toast.makeText(context, "no authorization", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener { /* Handle failure */ }
         }
-
-
-
-    }}
+    }
+    }

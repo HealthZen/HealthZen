@@ -63,37 +63,47 @@ class DetailPostActivity : AppCompatActivity() {
                         .delete()
                         .addOnSuccessListener {
 
-                            val commentRef= db.collection("posts").document(postId)
-                            commentRef.collection("comments")
-                                .whereEqualTo("postId", postId)
+                            db.collection("posts").document(postId)
+                                .collection("comments")
                                 .get()
-                                .addOnSuccessListener { querySnapshot ->
+                                .addOnSuccessListener { mainCommentsSnapshot ->
                                     val batch = db.batch()
-                                    for (document in querySnapshot.documents) {
-                                        batch.delete(document.reference)
+                                    for (mainCommentDoc in mainCommentsSnapshot.documents) {
+                                        batch.delete(mainCommentDoc.reference)
+
+                                        val replyRef=mainCommentDoc.reference
+                                            .collection("replies")
+                                        replyRef.get()
+                                            .addOnSuccessListener { replySnapshot->
+                                                for (replyDoc in replySnapshot.documents){
+                                                    batch.delete(replyDoc.reference)
+                                                }
+                                                batch.commit()
+                                                    .addOnSuccessListener {
+                                                        Toast.makeText(
+                                                            this@DetailPostActivity,
+                                                            "Post and comments deleted successfully",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                        startActivity(
+                                                            Intent(
+                                                                this@DetailPostActivity,
+                                                                MyPostsActivity::class.java
+                                                            )
+                                                        )
+                                                        finish()
+                                                    }
+                                                    .addOnFailureListener { e ->
+                                                        Toast.makeText(
+                                                            this@DetailPostActivity,
+                                                            "Failed to delete post: ${e.message}",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
+                                            }
+
                                     }
-                                    batch.commit()
-                                        .addOnSuccessListener {
-                                            Toast.makeText(
-                                                this@DetailPostActivity,
-                                                "Post and comments deleted successfully",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            startActivity(
-                                                Intent(
-                                                    this@DetailPostActivity,
-                                                    MyPostsActivity::class.java
-                                                )
-                                            )
-                                            finish()
-                                        }
-                                        .addOnFailureListener { e ->
-                                            Toast.makeText(
-                                                this@DetailPostActivity,
-                                                "Failed to delete post: ${e.message}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
+
 
                                 }
                                 .addOnFailureListener { e ->
