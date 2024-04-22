@@ -95,7 +95,6 @@ private lateinit var repliedRecyclerView:RecyclerView
 
       firebaseAuth = FirebaseAuth.getInstance()
    firestore = FirebaseFirestore.getInstance()
-
         //handle submit reply
         holder.submitReplyButton.setOnClickListener {
             val replyContent = holder.replyInputField.text.toString()

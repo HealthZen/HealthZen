@@ -51,6 +51,7 @@ class RepliedAdapter(private val replyList: MutableList<RepliedComment>) :
 
 
 
+
         //set delete button visibility
         val repliedAuthorId = currentItem.repliedAuthorId
         val postId = currentItem.postId
@@ -81,7 +82,9 @@ class RepliedAdapter(private val replyList: MutableList<RepliedComment>) :
             showDeleteConfirmationDialog(
                 holder.getContext(),
                 currentItem.replyId,
-                currentItem.postId
+                currentItem.postId,
+                currentItem.parentCommentId
+
             )
         }
 
@@ -91,13 +94,13 @@ class RepliedAdapter(private val replyList: MutableList<RepliedComment>) :
         return replyList.size
     }
 
-    private fun showDeleteConfirmationDialog(context: Context, commentId: String,postId: String) {
+    private fun showDeleteConfirmationDialog(context: Context, commentId: String,postId: String,parentCommentId: String) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Confirm Delete")
         builder.setMessage("Are you sure you want to delete this comment?")
         builder.setPositiveButton("Yes") { _, _ ->
             // Delete the comment
-            deleteReply(context, commentId,postId)
+            deleteReply(context, commentId,postId,parentCommentId)
         }
         builder.setNegativeButton("No") { dialog, _ ->
             dialog.dismiss()
@@ -107,13 +110,14 @@ class RepliedAdapter(private val replyList: MutableList<RepliedComment>) :
     }
 
     // Method to delete the comment
-    private fun deleteReply(context: Context, replyId: String,postId: String) {
+    private fun deleteReply(context: Context, replyId: String,postId: String,parentCommentId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val db = FirebaseFirestore.getInstance()
         if (userId != null&&postId != null && replyId != null) {
             val postRef = db.collection("posts").document(postId)
-            val commentRef = postRef.collection("comments").document(replyId)
-            commentRef.delete()
+            val commentRef = postRef.collection("comments").document(parentCommentId)
+            val replyRef =commentRef.collection("replies").document(replyId)
+            replyRef.delete()
                 .addOnSuccessListener {
                     // Remove the deleted comment from the commentList
                     val position =
@@ -128,8 +132,11 @@ class RepliedAdapter(private val replyList: MutableList<RepliedComment>) :
                                             Toast.LENGTH_SHORT
                                         ).show()
 
-                            }}
-                            .addOnFailureListener { /* Handle failure */ }
+                            }
+                }
+
+
+                .addOnFailureListener { /* Handle failure */ }
                     } else {
                         Toast.makeText(
                             context,
