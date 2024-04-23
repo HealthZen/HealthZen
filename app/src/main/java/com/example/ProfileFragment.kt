@@ -137,9 +137,28 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
+        //navigate to my post
         postsNumber.setOnClickListener {
             startActivity(Intent(activity,MyPostsActivity::class.java))
         }
+
+
+
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+       //fetch the number of posts from firestore
+        if(userId!=null){
+            firestore.collection("posts")
+                .whereEqualTo("userId",userId)
+                .get()
+                .addOnSuccessListener { documents->
+                    val postCount=documents.size()
+
+                    postsNumber.text= postCount.toString()
+                }
+        }
+
+
+
 
         deleteButton.setOnClickListener {
             // Build an AlertDialog to confirm account deletion
