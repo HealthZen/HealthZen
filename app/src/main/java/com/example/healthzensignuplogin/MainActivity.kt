@@ -1,5 +1,6 @@
 package com.example.healthzensignuplogin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_settings->{
-                    replaceFragment(SettingsFragment())
+                    startActivity(Intent(this, SplashCommunityActivity::class.java))
                     true
                 }
                 else ->false
