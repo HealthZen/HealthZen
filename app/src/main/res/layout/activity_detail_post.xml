@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/profilebkg3">
+    android:background="@drawable/profilebkg2">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:background="@drawable/profilebkg3"
+        android:background="@drawable/profilebkg2"
         android:orientation="vertical"
         >
     <LinearLayout
@@ -20,6 +20,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="24dp"
         android:background="@color/white">
+
 
         <TextView
             android:id="@+id/textViewPostTitle"
@@ -38,6 +39,7 @@
             android:layout_marginTop="8dp"
             android:textSize="20sp"
             android:text="PostContent"  />
+
         <TextView
             android:id="@+id/postDate"
             android:layout_width="match_parent"
@@ -46,61 +48,59 @@
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:text="postDate"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-
-            android:background="@color/white">
-
-<!--        <Button-->
-<!--            android:id="@+id/deletePostButton"-->
-<!--            android:layout_width="150dp"-->
+        <Button
+            android:id="@+id/editPostBtn"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/baseline_edit_note_24"
+            android:text="edit"
+            android:textColor="@color/black"
+            android:layout_gravity="end"/>
+        <Button
+            android:id="@+id/deletePostBtn"
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/baseline_delete_outline_24"
+            android:text="delete"
+            android:textColor="@color/black"
+            android:layout_gravity="end"/>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:text="Delete"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:onClick="onDeleteButtonClicked"-->
-<!--            android:textSize="18sp"-->
-<!--            android:backgroundTint="@color/lightgreen"-->
-<!--            />-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_gravity="center_horizontal"-->
+
+<!--            android:background="@color/white">-->
 
 
-            <ImageView
-                android:id="@+id/editPostImageView"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/baseline_edit_note_24"
-                />
-
-        <ImageView
-            android:id="@+id/deletePostImageView"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/baseline_delete_outline_24" />
 
 
-<!--        <Button-->
-<!--            android:id="@+id/editPostButton"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="18sp"-->
-<!--            android:text="Edit"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:onClick="onEditButtonClicked"-->
-<!--            android:backgroundTint="@color/lightgreen" />-->
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:id="@+id/editPostImageView"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:src="@drawable/baseline_edit_note_24"-->
+<!--                />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/deletePostImageView"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/baseline_delete_outline_24" />-->
+
+<!--      -->
+<!--            -->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 

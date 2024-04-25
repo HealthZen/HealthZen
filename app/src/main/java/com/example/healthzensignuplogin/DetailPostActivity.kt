@@ -17,17 +17,19 @@ import com.example.healthzensignuplogin.R
 import com.google.firebase.auth.FirebaseAuth
 
 class DetailPostActivity : AppCompatActivity() {
-    private lateinit var editPostImageView: ImageView
-    private lateinit var deletePostImageView:ImageView
+
+
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore:FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
+    private lateinit var editPostBtn: Button
+    private lateinit var deletePostBtn:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
-        editPostImageView=findViewById(R.id.editPostImageView)
-        deletePostImageView=findViewById(R.id.deletePostImageView)
+        editPostBtn=findViewById(R.id.editPostBtn)
+        deletePostBtn=findViewById(R.id.deletePostBtn)
         firebaseAuth=FirebaseAuth.getInstance()
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -45,13 +47,13 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
 
-        editPostImageView.setOnClickListener {
+        editPostBtn.setOnClickListener {
             val intent = Intent(this, EditMyPostActivity::class.java)
             intent.putExtra("postId", postId)
             startActivity(intent)
         }
 
-        deletePostImageView.setOnClickListener {
+        deletePostBtn.setOnClickListener {
             val postId = postId ?: return@setOnClickListener
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Confirm Delete")
@@ -63,7 +65,17 @@ class DetailPostActivity : AppCompatActivity() {
                     db.collection("posts").document(postId)
                         .delete()
                         .addOnSuccessListener {
-
+                            Toast.makeText(
+                                this@DetailPostActivity,
+                                "Post deleted successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            startActivity(
+                                Intent(
+                                    this@DetailPostActivity,
+                                    MyPostsActivity::class.java
+                                )
+                            )
                             db.collection("posts").document(postId)
                                 .collection("comments")
                                 .get()
