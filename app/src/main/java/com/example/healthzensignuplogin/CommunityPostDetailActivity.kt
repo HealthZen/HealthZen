@@ -30,6 +30,9 @@ class CommunityPostDetailActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var favoriteImageView: ImageView
+    private lateinit var backImageView: ImageView
+
+
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var RepliedAdapter: RepliedAdapter
     private lateinit var commentId:String
@@ -43,6 +46,8 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         favoriteImageView = findViewById(R.id.favoriteImageView)
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        backImageView = findViewById(R.id.backImageView)
+
 
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -62,6 +67,12 @@ class CommunityPostDetailActivity : AppCompatActivity() {
         }
 
         //display comment based on postid
+
+
+        backImageView.setOnClickListener{
+            finish()
+        }
+
 
 
         //retrieve comments

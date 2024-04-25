@@ -25,6 +25,7 @@ class DetailPostActivity : AppCompatActivity() {
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var editPostBtn: Button
     private lateinit var deletePostBtn:Button
+    private lateinit var backImageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
@@ -33,6 +34,7 @@ class DetailPostActivity : AppCompatActivity() {
         firebaseAuth=FirebaseAuth.getInstance()
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        backImageView = findViewById(R.id.backImageView)
 
         // Retrieve postId from intent extra
         val postId = intent.getStringExtra("postId")
@@ -46,6 +48,12 @@ class DetailPostActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.postDate).text = posts?.date
         }
 
+
+        //back to  previous page
+
+        backImageView.setOnClickListener{
+            finish()
+        }
 
         editPostBtn.setOnClickListener {
             val intent = Intent(this, EditMyPostActivity::class.java)
