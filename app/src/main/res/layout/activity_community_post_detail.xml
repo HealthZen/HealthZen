@@ -1,44 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:background="@drawable/profilebkg3">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-
-    android:orientation="vertical"
-
-    >
-
-
-    <LinearLayout
+    android:background="@color/white"
+    android:orientation="vertical">
+    <Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        android:padding="14dp"
-        android:background="@color/white"
-       >
+        android:background="@color/lightgreen"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Details"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textColor="@color/white"
+            />
+
+
+    </Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/lightgrey"
+            android:orientation="vertical"
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-
+            android:padding="20dp"
             android:background="@color/white"
             >
-        <TextView
-            android:id="@+id/textViewPostTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:text="PostTitle"
-          />
+
+            <LinearLayout
+                android:layout_width="331dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/white"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewPoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewPostContent"
+                    android:layout_marginTop="8dp"
+                    android:text="Poster"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/postDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="8dp"
+                    android:text="Poster"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/textViewPostTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PostTitle"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/textViewPostContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewPostTitle"
+                    android:layout_marginTop="8dp"
+                    android:text="PostContent"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/favoriteImageView"
@@ -47,44 +108,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/baseline_favorite_border_24"
-                android:layout_marginLeft="185dp"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewPoster"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewPostContent"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:text="Poster" />
-
-        <TextView
-            android:id="@+id/postDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:text="Poster" />
-
-        <TextView
-            android:id="@+id/textViewPostContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewPostTitle"
-            android:layout_marginTop="8dp"
-            android:textSize="25sp"
-            android:text="PostContent"/>
-<!--        <Button-->
-<!--            android:id="@+id/favoriteBtn"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:drawableTop="@drawable/black_heart_icon"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            />-->
-
+                />
 
     </LinearLayout>
 
@@ -93,35 +117,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:padding="14dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         >
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Comment"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Comment"
+            android:textSize="20sp"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="0dp"/>
 
 
-
-<!--        &lt;!&ndash; Comment area &ndash;&gt;-->
-<!--        <EditText-->
-<!--            android:id="@+id/commentEditText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="Add a comment..."-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:padding="8dp"/>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/buttonPostComment"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Post"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:backgroundTint="@color/lightgreen"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,11 +168,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"/>
-
     </LinearLayout>
 
-
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
 
-    </ScrollView>
