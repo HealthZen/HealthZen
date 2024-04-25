@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
@@ -16,8 +17,8 @@ import com.example.healthzensignuplogin.R
 import com.google.firebase.auth.FirebaseAuth
 
 class DetailPostActivity : AppCompatActivity() {
-    private lateinit var editPostButton:Button
-    private lateinit var deletePostButton:Button
+    private lateinit var editPostImageView: ImageView
+    private lateinit var deletePostImageView:ImageView
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore:FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
@@ -25,8 +26,8 @@ class DetailPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
-        editPostButton=findViewById(R.id.editPostButton)
-        deletePostButton=findViewById(R.id.deletePostButton)
+        editPostImageView=findViewById(R.id.editPostImageView)
+        deletePostImageView=findViewById(R.id.deletePostImageView)
         firebaseAuth=FirebaseAuth.getInstance()
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -44,13 +45,13 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
 
-        editPostButton.setOnClickListener {
+        editPostImageView.setOnClickListener {
             val intent = Intent(this, EditMyPostActivity::class.java)
             intent.putExtra("postId", postId)
             startActivity(intent)
         }
 
-        deletePostButton.setOnClickListener {
+        deletePostImageView.setOnClickListener {
             val postId = postId ?: return@setOnClickListener
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Confirm Delete")

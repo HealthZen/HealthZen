@@ -45,7 +45,7 @@ private lateinit var repliedRecyclerView:RecyclerView
         val replyCommentImage: ImageView = itemView.findViewById(R.id.replycommentimage)
         val replyBoxLayout: LinearLayout = itemView.findViewById(R.id.replyBoxLayout)
         val replyInputField: EditText = itemView.findViewById(R.id.replyInputField)
-        val submitReplyButton: Button = itemView.findViewById(R.id.submitReplyButton)
+        val submitReplyImageView: ImageView = itemView.findViewById(R.id.submitReplyImageView)
         val deleteCommentview: ImageView = itemView.findViewById(R.id.deleteCommentview)
 
         val repliedRecyclerView: RecyclerView = itemView.findViewById(R.id.repliedRecyclerView)
@@ -96,7 +96,7 @@ private lateinit var repliedRecyclerView:RecyclerView
       firebaseAuth = FirebaseAuth.getInstance()
    firestore = FirebaseFirestore.getInstance()
         //handle submit reply
-        holder.submitReplyButton.setOnClickListener {
+        holder.submitReplyImageView.setOnClickListener {
             val replyContent = holder.replyInputField.text.toString()
             if (replyContent.isNotEmpty()) {
                 // Create replied comment data
