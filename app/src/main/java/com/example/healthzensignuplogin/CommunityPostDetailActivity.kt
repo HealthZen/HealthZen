@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -22,13 +23,13 @@ import kotlin.collections.addAll
 import kotlin.collections.*
 
 class CommunityPostDetailActivity : AppCompatActivity() {
-    private lateinit var buttonPostComment: Button
+    private lateinit var addCommentImageView: ImageView
   private lateinit var firestore: FirebaseFirestore
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var commentEditText: EditText
     private lateinit var recyclerView: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
-    private lateinit var favoriteBtn:Button
+    private lateinit var favoriteImageView: ImageView
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var RepliedAdapter: RepliedAdapter
     private lateinit var commentId:String
@@ -37,9 +38,9 @@ class CommunityPostDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_post_detail)
-        buttonPostComment = findViewById(R.id.buttonPostComment)
+        addCommentImageView = findViewById(R.id.addCommentImageView)
         commentEditText = findViewById(R.id.commentEditText)
-        favoriteBtn = findViewById(R.id.favoriteBtn)
+        favoriteImageView = findViewById(R.id.favoriteImageView)
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -111,7 +112,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
                                     val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
                                     val repliedTimestamp = repliedDocument.getTimestamp("timestamp")
                                     val repliedTimestampString = repliedTimestamp?.toDate()?.toString() ?: ""
-                                    val parentCommentId = repliedDocument.getString("parentCommentId") ?: ""
+                                    val parentCommentId = repliedDocument.getString("parentcommentId") ?: ""
                                     val postId = repliedDocument.getString("postId") ?: ""
 
                                     // Create the replied comment object
@@ -161,7 +162,7 @@ class CommunityPostDetailActivity : AppCompatActivity() {
          isLiked = sharedPreferences.getBoolean(postId, false)
 
         setFavoriteButtonDrawable()
-        favoriteBtn.setOnClickListener {
+        favoriteImageView.setOnClickListener {
             // Toggle the liked status when the button is clicked
             isLiked = !isLiked // Toggle the value of isLiked
 
@@ -181,8 +182,8 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
 
 
-
-        buttonPostComment.setOnClickListener {
+//add comment
+        addCommentImageView.setOnClickListener {
 
             var newCommentContent = commentEditText.text.toString()
             if (newCommentContent.isNotEmpty()) {
@@ -244,9 +245,9 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
     private fun setFavoriteButtonDrawable() {
         if (isLiked) {
-            favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.red_heart_icon, 0, 0) // Set favorite button to red icon
+            favoriteImageView.setImageResource(R.drawable.red_heart_icon) // Set favorite button to red icon
         } else {
-            favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.black_heart_icon, 0, 0) // Set favorite button to black icon
+            favoriteImageView.setImageResource(R.drawable.baseline_favorite_border_24) // Set favorite button to black icon
         }
     }
 

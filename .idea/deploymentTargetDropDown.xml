@@ -14,8 +14,13 @@
                 </Key>
               </deviceKey>
             </Target>
+<<<<<<< HEAD
           </runningDeviceTargetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-04-25T07:21:19.155843200Z" />
+=======
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-25T07:00:29.263518900Z" />
+>>>>>>> communityUi
         </State>
       </entry>
     </value>

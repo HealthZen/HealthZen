@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Toast
@@ -16,17 +17,19 @@ import com.example.healthzensignuplogin.R
 import com.google.firebase.auth.FirebaseAuth
 
 class DetailPostActivity : AppCompatActivity() {
-    private lateinit var editPostButton:Button
-    private lateinit var deletePostButton:Button
+
+
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore:FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var commentAdapter: CommentAdapter
+    private lateinit var editPostBtn: Button
+    private lateinit var deletePostBtn:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
-        editPostButton=findViewById(R.id.editPostButton)
-        deletePostButton=findViewById(R.id.deletePostButton)
+        editPostBtn=findViewById(R.id.editPostBtn)
+        deletePostBtn=findViewById(R.id.deletePostBtn)
         firebaseAuth=FirebaseAuth.getInstance()
         recyclerView = findViewById(R.id.commentRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -44,13 +47,13 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
 
-        editPostButton.setOnClickListener {
+        editPostBtn.setOnClickListener {
             val intent = Intent(this, EditMyPostActivity::class.java)
             intent.putExtra("postId", postId)
             startActivity(intent)
         }
 
-        deletePostButton.setOnClickListener {
+        deletePostBtn.setOnClickListener {
             val postId = postId ?: return@setOnClickListener
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Confirm Delete")
@@ -62,7 +65,17 @@ class DetailPostActivity : AppCompatActivity() {
                     db.collection("posts").document(postId)
                         .delete()
                         .addOnSuccessListener {
-
+                            Toast.makeText(
+                                this@DetailPostActivity,
+                                "Post deleted successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            startActivity(
+                                Intent(
+                                    this@DetailPostActivity,
+                                    MyPostsActivity::class.java
+                                )
+                            )
                             db.collection("posts").document(postId)
                                 .collection("comments")
                                 .get()
@@ -182,7 +195,7 @@ class DetailPostActivity : AppCompatActivity() {
                                     val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
                                     val repliedTimestamp = repliedDocument.getTimestamp("timestamp")
                                     val repliedTimestampString = repliedTimestamp?.toDate()?.toString() ?: ""
-                                    val parentCommentId = repliedDocument.getString("parentCommentId") ?: ""
+                                    val parentCommentId = repliedDocument.getString("parentcommentId") ?: ""
                                     val postId = repliedDocument.getString("postId") ?: ""
 
                                     // Create the replied comment object
