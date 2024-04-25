@@ -183,7 +183,7 @@ class DetailPostActivity : AppCompatActivity() {
                                     val repliedAuthorId = repliedDocument.getString("repliedAuthorId") ?: ""
                                     val repliedTimestamp = repliedDocument.getTimestamp("timestamp")
                                     val repliedTimestampString = repliedTimestamp?.toDate()?.toString() ?: ""
-                                    val parentCommentId = repliedDocument.getString("parentCommentId") ?: ""
+                                    val parentCommentId = repliedDocument.getString("parentcommentId") ?: ""
                                     val postId = repliedDocument.getString("postId") ?: ""
 
                                     // Create the replied comment object

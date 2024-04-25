@@ -25,10 +25,19 @@
             android:id="@+id/textViewPostTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:text="PostTitle"/>
 
+
+        <TextView
+            android:id="@+id/textViewPostContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewPostTitle"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            android:text="PostContent"  />
         <TextView
             android:id="@+id/postDate"
             android:layout_width="match_parent"
@@ -37,14 +46,7 @@
             android:layout_marginTop="8dp"
             android:textSize="14sp"
             android:text="postDate"/>
-        <TextView
-            android:id="@+id/textViewPostContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewPostTitle"
-            android:layout_marginTop="8dp"
-            android:textSize="30sp"
-            android:text="PostContent"  />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,15 +72,17 @@
 
             <ImageView
                 android:id="@+id/editPostImageView"
-                android:layout_width="70dp"
+                android:layout_width="40dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/baseline_edit_note_24" />
+                android:src="@drawable/baseline_edit_note_24"
+                />
+
         <ImageView
             android:id="@+id/deletePostImageView"
-            android:layout_width="70dp"
+            android:layout_width="40dp"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:clickable="true"

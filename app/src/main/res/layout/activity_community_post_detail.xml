@@ -67,8 +67,8 @@
 <!--            />-->
         <ImageView
             android:id="@+id/favoriteImageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
             android:focusable="true"
@@ -129,7 +129,7 @@
 
             <ImageView
                 android:id="@+id/addCommentImageView"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
              android:layout_height="40dp"
                 android:clickable="true"
                 android:focusable="true"
