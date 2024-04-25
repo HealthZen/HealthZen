@@ -63,8 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:text="Explore the latest updates from community"
+                android:text="Explore the latest updates from colleagues in the field and provide mutual support"
                 android:textColor="@color/brown"
+                android:textAlignment="center"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -84,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
-                android:text="AddPost"
+                android:text="Add Post"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="20dp"
@@ -113,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
-                android:text="MyPosts"
+                android:text="My Posts"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="20dp"
@@ -153,11 +154,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:text="Stay informed with the latest notifications"
+                android:text="View liked posts and stay informed with the latest notifications"
                 android:textColor="@color/brown"
+                android:textAlignment="center"
                 android:textSize="15sp" />
-
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,7 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:backgroundTint="@color/lightgreen"
-                android:text="Notification"
+                android:text="Notifications"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="20dp"
