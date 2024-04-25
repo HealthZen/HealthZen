@@ -65,6 +65,7 @@ android {
         implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
         implementation("com.squareup.retrofit2:converter-gson:2.9.0")
         implementation ("androidx.navigation:navigation-fragment-ktx:2.3.5")
+        implementation ("com.google.android.gms:play-services-auth:19.2.0")
         implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
         implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
         implementation("com.google.firebase:firebase-auth")

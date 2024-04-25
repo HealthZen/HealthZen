@@ -120,11 +120,15 @@ class LogInActivity : AppCompatActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
-
     private fun googleSigIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        launcher.launch(signInIntent)
+        // Sign out previous user
+        googleSignInClient.signOut().addOnCompleteListener {
+            // Initiate sign-in flow for new user
+            val signInIntent = googleSignInClient.signInIntent
+            launcher.launch(signInIntent)
+        }
     }
+
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result ->
@@ -132,6 +136,7 @@ class LogInActivity : AppCompatActivity() {
 
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 manageResult(task)
+
         }
     }
 

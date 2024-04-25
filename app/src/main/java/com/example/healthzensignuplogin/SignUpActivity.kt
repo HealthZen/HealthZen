@@ -2,12 +2,14 @@ package com.example.healthzensignuplogin
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,15 +38,16 @@ class SignUpActivity : AppCompatActivity() {
         signupButton = findViewById(R.id.signup_button)
         loginRedirectText = findViewById(R.id.loginRedirectText)
 
-        signupButton.setOnClickListener {
 
+        signupButton.setOnClickListener {
             val name = signupName.text.toString().trim()
             val email = signupEmail.text.toString().trim()
             val username = signupUsername.text.toString().trim()
             val password = signupPassword.text.toString().trim()
 
             if (name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this@SignUpActivity, "All fields are required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SignUpActivity, "All fields are required", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -62,13 +65,18 @@ class SignUpActivity : AppCompatActivity() {
                     firestore.collection("users").document(userId)
                         .set(user)
                         .addOnSuccessListener {
-                            Toast.makeText(this@SignUpActivity, "SignUp Successful", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "SignUp Successful",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
                         }
                         .addOnFailureListener { e ->
                             val errorMessage = "Failed to save user data: ${e.message}"
                             Log.e(TAG, errorMessage)
-                            Toast.makeText(this@SignUpActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SignUpActivity, errorMessage, Toast.LENGTH_SHORT)
+                                .show()
                         }
                 } else {
                     val errorMessage = "SignUp Failed: ${task.exception?.message}"
@@ -81,5 +89,6 @@ class SignUpActivity : AppCompatActivity() {
         loginRedirectText.setOnClickListener {
             startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
         }
+
     }
 }
