@@ -378,6 +378,10 @@ class ProfileFragment : Fragment() {
             ::profileName.isInitialized && ::profileEmail.isInitialized &&
             ::profileUsername.isInitialized && ::profilePassword.isInitialized&&
             ::profilePic.isInitialized) {
+
+            val sharedPref = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
+            val profilePicUrl = sharedPref.getString("profilePicUrl", "")
+
             // Set user data to TextViews
             titleName.text = nameUser
             titleUsername.text = usernameUser
@@ -386,8 +390,6 @@ class ProfileFragment : Fragment() {
             profileUsername.text = usernameUser
             profilePassword.text = "********"
             // Retrieve profile picture URL from SharedPreferences
-            val sharedPref = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
-            val profilePicUrl = sharedPref.getString("profilePicUrl", "")
 
             // Load profile picture if URL is not empty
             if (!profilePicUrl.isNullOrEmpty()) {
