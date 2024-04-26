@@ -70,9 +70,13 @@ class CommunityPostDetailActivity : AppCompatActivity() {
 
 
         backImageView.setOnClickListener{
-            finish()
+            startActivity(
+                Intent(
+                    this@CommunityPostDetailActivity,
+                    AllPostsActivity::class.java
+                )
+            )
         }
-
 
 
         //retrieve comments

@@ -52,9 +52,13 @@ class DetailPostActivity : AppCompatActivity() {
         //back to  previous page
 
         backImageView.setOnClickListener{
-            finish()
+            startActivity(
+                Intent(
+                    this@DetailPostActivity,
+                    MyPostsActivity::class.java
+                )
+            )
         }
-
         editPostBtn.setOnClickListener {
             val intent = Intent(this, EditMyPostActivity::class.java)
             intent.putExtra("postId", postId)
