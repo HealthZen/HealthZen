@@ -14,8 +14,8 @@
         android:layout_marginTop="5dp"
         android:textSize="30sp"
         android:textStyle="bold"
-
-        android:textColor="@color/lightgreen"
+        android:fontFamily="monospace"
+        android:textColor="@color/brown"
         />
 
     <androidx.recyclerview.widget.RecyclerView

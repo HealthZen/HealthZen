@@ -16,7 +16,8 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:layout_marginVertical="10dp"
-        android:textColor="@color/lightgreen"
+        android:fontFamily="monospace"
+        android:textColor="@color/brown"
         />
 
     <SearchView
