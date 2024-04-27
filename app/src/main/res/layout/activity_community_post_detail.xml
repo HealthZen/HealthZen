@@ -55,29 +55,47 @@
             >
 
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/white"
 
                 android:orientation="vertical">
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textViewPoster"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewPostContent"
                     android:layout_marginTop="8dp"
                     android:text="Poster"
                     android:textSize="14sp" />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/favoriteImageView"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/baseline_favorite_border_24"
+                        android:layout_gravity="end"
+                        />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/postDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginTop="8dp"
-                    android:text="Poster"
+                    android:text="Post date"
                     android:textSize="14sp" />
 
                 <TextView
@@ -101,14 +119,7 @@
             </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/favoriteImageView"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/baseline_favorite_border_24"
-                />
+
 
     </LinearLayout>
 
@@ -143,7 +154,7 @@
            >
                 <EditText
                     android:id="@+id/commentEditText"
-                    android:layout_width="280dp"
+                    android:layout_width="330dp"
                     android:layout_height="wrap_content"
                     android:hint="Add a comment..." />
 
