@@ -9,6 +9,7 @@ import com.example.healthzensignuplogin.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.example.healthzensignuplogin.AllPostsActivity
 import com.example.healthzensignuplogin.FavoritesActivity
 import com.example.healthzensignuplogin.MyPostsActivity
@@ -54,9 +55,18 @@ class SettingsFragment : Fragment() {
         favoritesButton.setOnClickListener {
             startActivity(Intent(activity, FavoritesActivity::class.java))
         }
+
         NotificationButton.setOnClickListener {
-            startActivity(Intent(activity, SplashStressReliefActivity::class.java))
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Premium Access Required")
+            builder.setMessage("Get premium to access Notification.")
+            builder.setPositiveButton("OK") { dialog, which ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
+
 
 
 
