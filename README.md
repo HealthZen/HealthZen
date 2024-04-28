@@ -2,6 +2,13 @@ HealthZen
 
 HealthZen is a mobile application tailored for healthcare professionals, aiming to support their professional growth, well-being, and work-life balance.
 
+Android Development Tools
+
+- Android Studio: IDE for Android development.
+- Kotlin: Programming language used for Android app development.
+
+
+  
 App Overview
 
 HealthZen provides the following features:
@@ -26,10 +33,6 @@ Features
 - Splash Activity: Displays a splash screen during app launch.
 - Networking: Utilizes Retrofit and OkHttpClient for network requests.
 
-Android Development Tools
-
-- Android Studio: IDE for Android development.
-- Kotlin: Programming language used for Android app development.
 - GitHub: Version control system for collaborative development.
 
 Community Page
