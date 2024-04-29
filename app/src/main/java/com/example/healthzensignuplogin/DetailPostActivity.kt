@@ -267,8 +267,7 @@ class DetailPostActivity : AppCompatActivity() {
                     val post = MyPostDataClass( postTitle, postContent, poster,postId,timestampString)
                     callback(post)
                 } else {
-                    // Post not found or document doesn't exist
-                    // Handle error or return null/default post
+
                     callback(null)
                 }
             }

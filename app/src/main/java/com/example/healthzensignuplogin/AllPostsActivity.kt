@@ -62,8 +62,7 @@ class AllPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener
                     exception.printStackTrace()
                 }
         } else {
-            // User is not authenticated
-            // Handle this case accordingly (e.g., redirect to login)
+
         }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

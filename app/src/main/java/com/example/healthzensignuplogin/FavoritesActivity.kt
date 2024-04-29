@@ -79,8 +79,7 @@ class FavoritesActivity : AppCompatActivity(), FavoritesAdapter.OnItemClickListe
                     exception.printStackTrace()
                 }
         } else {
-            // User is not authenticated
-            // Handle this case accordingly (e.g., redirect to login)
+
         }    }
     override fun onItemClick(post: Favorites) {
         // Handle click event, navigate to detail post page

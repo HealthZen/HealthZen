@@ -53,8 +53,7 @@ class MyPostsActivity : AppCompatActivity(), MyPostsAdapter.OnItemClickListener 
                     exception.printStackTrace()
                 }
         } else {
-            // User is not authenticated
-            // Handle this case accordingly (e.g., redirect to login)
+
         }
     }
     override fun onItemClick(post: MyPostDataClass) {
