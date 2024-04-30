@@ -2,8 +2,8 @@
 
 HealthZen is not just another mobile application; it's your ultimate companion in the world of healthcare. Designed specifically for healthcare professionals, HealthZen aims to support your professional growth, enhance your well-being, and help you achieve that elusive work-life balance.
 <div style="display: flex; justify-content: center;">
-    <img src="Screenshots/login.png" alt="HealthZen Login Page" width="280" height="500" />
-    <img src="Screenshots/signup.png" alt="HealthZen Sign Up Page" width="280" height="500" />
+    <img src="Screenshots/login.png" alt="HealthZen Login Page" width="260" height="500" />
+    <img src="Screenshots/signup.png" alt="HealthZen Sign Up Page" width="260" height="500" />
 </div>
 
 ## Android Development Tools 🛠️
@@ -25,52 +25,52 @@ HealthZen offers a plethora of features to cater to your needs:
 
 - **News**: Stay up-to-date with the latest healthcare news and industry developments.
     <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="280" height="500" />
-        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="280" height="500" />
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="260" height="500" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="260" height="500" />
     </div>
     
 - **Calendar**: Arrange schedule seamlessly.
     <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/calendar.png" alt="Calendar Main Page" width="280" height="500" />
-        <img src="Screenshots/calendar1.png" alt="Calendar Add Event View" width="280" height="500" />
+        <img src="Screenshots/calendar.png" alt="Calendar Main Page" width="260" height="500" />
+        <img src="Screenshots/calendar1.png" alt="Calendar Add Event View" width="260" height="500" />
     </div>
 
 - **Education**: Access a treasure trove of educational materials to sharpen your professional skills.
       <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/education.png" alt="Education Splash" width="280" height="500" />
-        <img src="Screenshots/education1.png" alt="Education Main Page" width="280" height="500" />
-        <img src="Screenshots/education2.png" alt="Education Play Videoo" width="280" height="500" />
+        <img src="Screenshots/education.png" alt="Education Splash" width="260" height="500" />
+        <img src="Screenshots/education1.png" alt="Education Main Page" width="260" height="500" />
+        <img src="Screenshots/education2.png" alt="Education Play Videoo" width="260" height="500" />
       </div>
       
 - **Meditation**: Find your inner peace with mindfulness and meditation techniques tailored for healthcare professionals.
       <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/meditation.png" alt="Meditation Splash" width="280" height="500" />
-        <img src="Screenshots/meditation1.png" alt="Meditation Main Page" width="280" height="500" />
-        <img src="Screenshots/meditation2.png" alt="Meditation Play Videoo" width="280" height="500" />
+        <img src="Screenshots/meditation.png" alt="Meditation Splash" width="260" height="500" />
+        <img src="Screenshots/meditation1.png" alt="Meditation Main Page" width="260" height="500" />
+        <img src="Screenshots/meditation2.png" alt="Meditation Play Videoo" width="260" height="500" />
       </div>
       
 - **Relaxing Music**: Unwind and destress with a curated selection of soothing tunes.
       <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/relaxing music.png" alt="Relaxing Music Splash" width="280" height="500" />
-        <img src="Screenshots/relaxing music1.png" alt="Relaxing Music Main Page" width="280" height="500" />
-        <img src="Screenshots/relaxingmusic1.png" alt="Relaxing Music Play Videoo" width="280" height="500" />
+        <img src="Screenshots/relaxing music.png" alt="Relaxing Music Splash" width="260" height="500" />
+        <img src="Screenshots/relaxing music1.png" alt="Relaxing Music Main Page" width="260" height="500" />
+        <img src="Screenshots/relaxingmusic1.png" alt="Relaxing Music Play Videoo" width="260" height="500" />
       </div>
       
 - **Community**: Connect with like-minded healthcare professionals, share experiences, and seek advice.
       <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/community.png" alt="Community Main Pag" width="280" height="500" />
-        <img src="Screenshots/community1.png" alt="Community Posts" width="280" height="500" />
-        <img src="Screenshots/community2.png" alt="Community Posts Details" width="280" height="500" />
-        <img src="Screenshots/myfavorites.png" alt="My Favoritess" width="280" height="500" />
-        <img src="Screenshots/addpost.png" alt="Add Post" width="280" height="500" />
-        <img src="Screenshots/myposts.png" alt="My Posts" width="280" height="500" />
+        <img src="Screenshots/community.png" alt="Community Main Pag" width="260" height="500" />
+        <img src="Screenshots/community1.png" alt="Community Posts" width="260" height="500" />
+        <img src="Screenshots/community2.png" alt="Community Posts Details" width="260" height="500" />
+        <img src="Screenshots/myfavorites.png" alt="My Favoritess" width="260" height="500" />
+        <img src="Screenshots/addpost.png" alt="Add Post" width="260" height="500" />
+        <img src="Screenshots/myposts.png" alt="My Posts" width="260" height="500" />
       </div>
       
 - **Profile**: Customize your preferences and settings to tailor your HealthZen experience just the way you like it.
        <div style="display: flex; justify-content: center;">
-            <img src="Screenshots/profile.png" alt="Profile Page" width="280" height="500" />
-            <img src="Screenshots/logout.png" alt="Logout Page" width="280" height="500" />
-            <img src="Screenshots/deleteaccount.png" alt="Delete Account Page" width="280" height="500" />
+            <img src="Screenshots/profile.png" alt="Profile Page" width="260" height="500" />
+            <img src="Screenshots/logout.png" alt="Logout Page" width="260" height="500" />
+            <img src="Screenshots/deleteaccount.png" alt="Delete Account Page" width="260" height="500" />
         </div>
 
 ## Mobile Development 📱
