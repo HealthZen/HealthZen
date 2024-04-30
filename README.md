@@ -15,6 +15,12 @@ HealthZen offers a plethora of features to cater to your needs:
 <img src="Screenshots/news.png" alt="Community page" width="300" height="500" /> 
 <img src="Screenshots/news11.png" alt="Community page" width="300" height="500" />
 
+<div style="display: flex; justify-content: center;">
+    <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10px;" />
+    <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10px;" />
+</div>
+
+
 - **Education**: Access a treasure trove of educational materials to sharpen your professional skills.
 - **Meditation**: Find your inner peace with mindfulness and meditation techniques tailored for healthcare professionals.
 - **Relaxing Music**: Unwind and destress with a curated selection of soothing tunes.
