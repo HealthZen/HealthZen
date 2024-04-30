@@ -12,9 +12,10 @@ HealthZen is not just another mobile application; it's your ultimate companion i
 HealthZen offers a plethora of features to cater to your needs:
 
 - **News**: Stay up-to-date with the latest healthcare news and industry developments.
-    ![HealthZen News](Screenshots/news.png){: width="300" height="500"}
-    ![HealthZen News](Screenshots/news11.png){: width="300" height="500"}
-
+    <div style="display: flex; justify-content: center;">
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" />
+    </div>
 
 - **Education**: Access a treasure trove of educational materials to sharpen your professional skills.
       <div style="display: flex; justify-content: center;">
