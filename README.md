@@ -59,7 +59,7 @@ HealthZen offers a plethora of features to cater to your needs:
 - **Community**: Connect with like-minded healthcare professionals, share experiences, and seek advice.
       <div style="display: flex; justify-content: center;">
         <img src="Screenshots/community.png" alt="Community Main Pag" width="280" height="500" />
-        <img src="Screenshots/communit1.png" alt="Community Posts" width="280" height="500" />
+        <img src="Screenshots/community1.png" alt="Community Posts" width="280" height="500" />
         <img src="Screenshots/community2.png" alt="Community Posts Details" width="280" height="500" />
         <img src="Screenshots/myfavorites.png" alt="My Favoritess" width="280" height="500" />
         <img src="Screenshots/addpost.png" alt="Add Post" width="280" height="500" />
