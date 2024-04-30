@@ -13,8 +13,8 @@ HealthZen offers a plethora of features to cater to your needs:
 
 - **News**: Stay up-to-date with the latest healthcare news and industry developments.
     <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" />
-        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" />
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="270" height="400" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="270" height="400" />
     </div>
 
 - **Education**: Access a treasure trove of educational materials to sharpen your professional skills.
