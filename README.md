@@ -12,20 +12,35 @@ HealthZen is not just another mobile application; it's your ultimate companion i
 HealthZen offers a plethora of features to cater to your needs:
 
 - **News**: Stay up-to-date with the latest healthcare news and industry developments.
-<img src="Screenshots/news.png" alt="Community page" width="300" height="500" /> 
-<img src="Screenshots/news11.png" alt="Community page" width="300" height="500" />
-
-<div style="display: flex; justify-content: center;">
-    <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10;" />
-    <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10;" />
-</div>
+    ![HealthZen News](Screenshots/news.png){: width="300" height="500"}
+    ![HealthZen News](Screenshots/news11.png){: width="300" height="500"}
 
 
 - **Education**: Access a treasure trove of educational materials to sharpen your professional skills.
+      <div style="display: flex; justify-content: center;">
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10;" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10;" />
+      </div>
 - **Meditation**: Find your inner peace with mindfulness and meditation techniques tailored for healthcare professionals.
+  <div style="display: flex; justify-content: center;">
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10;" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10;" />
+    </div>
 - **Relaxing Music**: Unwind and destress with a curated selection of soothing tunes.
+  <div style="display: flex; justify-content: center;">
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10;" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10;" />
+    </div>
 - **Community**: Connect with like-minded healthcare professionals, share experiences, and seek advice.
+  <div style="display: flex; justify-content: center;">
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10;" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10;" />
+    </div>
 - **Profile**: Customize your preferences and settings to tailor your HealthZen experience just the way you like it.
+    <div style="display: flex; justify-content: center;">
+        <img src="Screenshots/news.png" alt="HealthZen News Main Page" width="300" height="500" style="margin-right: 10;" />
+        <img src="Screenshots/news11.png" alt="HealthZen News Play Video" width="300" height="500" style="margin-left: 10;" />
+    </div>
 
 ## Mobile Development 📱
 
@@ -46,7 +61,6 @@ The Community Page is where the magic happens:
 - **Post**: Share your thoughts, experiences, and insights with the HealthZen community.
 - **Comment**: Engage in lively discussions by commenting on posts and exchanging ideas.
 - **Firebase Firestore**: The powerhouse behind post management, ensuring a smooth and seamless user experience.
-<img src="Screenshots/community.png" alt="Community page" width="300" height="500" />
 
 
 
