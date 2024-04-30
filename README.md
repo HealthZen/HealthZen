@@ -38,6 +38,8 @@ The Community Page is where the magic happens:
 - **Comment**: Engage in lively discussions by commenting on posts and exchanging ideas.
 - **Firebase Firestore**: The powerhouse behind post management, ensuring a smooth and seamless user experience.
 ![Image Description](Screenshots/community.png)
+<img src="Screenshots/community.png" alt="Community page" width="200" height="100" />
+
 
 
 ## Let's Get Started! 🚀
