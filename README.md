@@ -1,11 +1,10 @@
 # Welcome to HealthZen!
 
 HealthZen is not just another mobile application; it's your ultimate companion in the world of healthcare. Designed specifically for healthcare professionals, HealthZen aims to support your professional growth, enhance your well-being, and help you achieve that elusive work-life balance.
-
-    <div style="display: flex; justify-content: center;">
-        <img src="Screenshots/login.png" alt="HealthZen Login Page" width="280" height="500" />
-        <img src="Screenshots/signup.png" alt="HealthZen Sign Up Page" width="280" height="500" />
-    </div>
+<div style="display: flex; justify-content: center;">
+    <img src="Screenshots/login.png" alt="HealthZen Login Page" width="280" height="500" />
+    <img src="Screenshots/signup.png" alt="HealthZen Sign Up Page" width="280" height="500" />
+</div>
 
 ## Android Development Tools 🛠️
 
