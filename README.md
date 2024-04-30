@@ -13,7 +13,7 @@ HealthZen offers a plethora of features to cater to your needs:
 
 - **News**: Stay up-to-date with the latest healthcare news and industry developments.
 <img src="Screenshots/news.png" alt="Community page" width="300" height="500" /> 
-<img src="Screenshots/news1.png" alt="Community page" width="300" height="500" />
+<img src="Screenshots/news11.png" alt="Community page" width="300" height="500" />
 
 - **Education**: Access a treasure trove of educational materials to sharpen your professional skills.
 - **Meditation**: Find your inner peace with mindfulness and meditation techniques tailored for healthcare professionals.
